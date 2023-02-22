@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.autos.*;
@@ -25,7 +26,8 @@ import frc.robot.subsystems.theCLAAAWWW.ClawState;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
-    private final Joystick Operator = new Joystick(2);
+    private final Joystick operator = new Joystick(2);
+    private final CommandXboxController m_Operator = new CommandXboxController(1);
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -42,15 +44,17 @@ public class RobotContainer {
     private final JoystickButton wristLeft = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton wristRight = new JoystickButton(driver, XboxController.Button.kY.value);
 
-    /* Operator Buttons */
-    private final JoystickButton nodeOne = new JoystickButton(Operator, 1);
-    private final JoystickButton nodeTwo = new JoystickButton(Operator, 2);
+    /* operator Buttons */
+    private final JoystickButton nodeOne = new JoystickButton(operator, 1);
+    private final JoystickButton nodeTwo = new JoystickButton(operator, 2);
 
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     //private final PnuematicSubsystem s_PneumaticsHub = new PnuematicSubsystem();
     private final theCLAAAWWW s_Claaawww = new theCLAAAWWW();
+    private final GripperSubsystem s_GripperSubsystem = new GripperSubsystem();
+    private final Wrist s_wrist = Wrist.getInstance();
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
@@ -62,6 +66,19 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean()
             )
+        );
+
+        s_GripperSubsystem.setDefaultCommand(
+            new RunCommand(
+                () ->
+                s_GripperSubsystem.driveGripper(m_Operator.getRightTriggerAxis() - m_Operator.getLeftTriggerAxis()), 
+                s_GripperSubsystem));
+
+        s_wrist.setDefaultCommand(
+            new RunCommand(
+                () -> 
+                s_wrist.driveWrist(m_Operator.getLeftY()), 
+                s_wrist)
         );
 
 
@@ -102,13 +119,13 @@ public class RobotContainer {
 
 
 
-        /*Operator Buttons */
+        /*operator Buttons */
         
      //   nodeOne.onTrue(new InstantCommand(() -> s_Claaawww.setClawstate(ClawState.LOADING)));
-     nodeOne.onTrue(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne", true)));
-     nodeOne.onFalse(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne", false)));
+        nodeOne.onTrue(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne", true)));
+        nodeOne.onFalse(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne", false)));
 
-
+      
 
 
     }

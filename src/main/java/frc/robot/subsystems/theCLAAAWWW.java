@@ -12,11 +12,13 @@ import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-
+import frc.robot.Constants.Clawstants;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 public class theCLAAAWWW extends SubsystemBase {
   /** Creates a new theCLAAAWWW. */
   private Buttons m_Buttons = new Buttons();
-
+  private XboxController xbox = new XboxController(4);
   public enum ClawState {
   
     LOADING, LOW, MEDIUM, HIGH
@@ -30,16 +32,11 @@ public class theCLAAAWWW extends SubsystemBase {
   // TODO Dont forget that EVERY thing needs a god forbidden PID.
 
   private boolean isToggled = false;
-
-
+  private double closedPos = 0;
   // ArmFeedforward armFeedForward = new ArmFeedforward(.21469, 0.43923, 2.0662);
 
   public theCLAAAWWW() {
-
     clawState = ClawState.LOADING;
-
-
-
   }
 
   @Override
@@ -79,7 +76,23 @@ public class theCLAAAWWW extends SubsystemBase {
 
     // IMPORTANT - DO NOT DELETE
     // setArmMotorsAngle(armAngle);
-    
+   
+    // if (isToggled) {
+
+    //   gripperMotor.set(ControlMode.Position, closedPos);
+
+    // } else
+    //   gripperMotor.set(ControlMode.Position, Clawstants.openAll);
+
+    // // if (cancoder.getAbsolutePosition() < target) {
+    //   gripperMotor.set(0.1);
+    // } else {
+    //   gripperMotor.set(0);
+    // }
+
+      xbox.getLeftY();
+
+
     SmartDashboard.putString("ClawState", clawState.name());
 
     SmartDashboard.putNumber("Arm Angle", arm.getAngle());
@@ -88,6 +101,8 @@ public class theCLAAAWWW extends SubsystemBase {
 
     SmartDashboard.putNumber("Arm Encoder", arm.getRawEncoderUnits());
     SmartDashboard.putNumber("Wrist Encoder", wrist.getRawEncoderUnits());
+    SmartDashboard.getBoolean("Closed", isToggled);
+    
 
   }
 /* Button things */
@@ -98,26 +113,25 @@ public void setClawstate(ClawState CS) {
 }
 
 //*Create Claw close/open abilites */
-CANCoder cancoder = new CANCoder(68);
 
-VictorSPX gripperMotor = new VictorSPX(69);
 
 private void toggleButton(){
 
   isToggled = !isToggled;
-
+  
 }
 
 private void toggleCone(){
 
-  isToggled = !isToggled;
+  closedPos = Clawstants.closedCone;
+  
 
 }
 
 
 private void toggleCube(){
 
-  isToggled = !isToggled;
+  closedPos = Clawstants.closedCube;
 
 }
 
@@ -125,19 +139,20 @@ private void toggleCube(){
 
 
 
-public void driveGripper(double speed) {
-  double kMax = 1000; // TODO change value to encoder values set via Tuner
-  double kMin = 100;
-  if (cancoder.getAbsolutePosition() > kMax && speed > 0) { // absolute value v. Posistion
-    gripperMotor.set(ControlMode.Position, kMin);
-  } else if (cancoder.getAbsolutePosition() < kMin && speed < 0) {
-    gripperMotor.set(ControlMode.Position, kMax);
+// public void driveGripper(double speed) {
+//   double kMax = 1000; // TODO change value to encoder values set via Tuner
+//   double kMin = 100;
+//   double kother = 10;
+//   if (cancoder.getAbsolutePosition() > kMax && speed > 0) { // absolute value v. Posistion
+//     gripperMotor.set(ControlMode.Position, kMin);
+//   } else if (cancoder.getAbsolutePosition() < kMin && speed < 0) {
+//     gripperMotor.set(ControlMode.Position, kMax);
 
-  } else {
-    gripperMotor.set(ControlMode.PercentOutput, speed);
+//   } else {
+//     gripperMotor.set(ControlMode.PercentOutput, speed);
 
-  }
-}
+//   }
+// }
 
 
 

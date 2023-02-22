@@ -184,6 +184,7 @@ public final class Constants {
         public static final int ClawMotorWristID = 28;
         public static final int ClawMotorLeftID = 26;
         public static final int ClawMotorRightID = 25;
+        public static final int ClawEncoder = 29;
         // public static final int PotentiometerID = 0;
         
         public static final double armFeedForward = 0.03;
@@ -193,6 +194,10 @@ public final class Constants {
 
         public static final double armGearRatio = 144;
         public static final double wristGearRatio = 30;
+
+        public static final double closedCube = 0;//TODO update with correct encoder value
+        public static final double openAll = 0;
+        public static final double closedCone = 0;
 
         /* Arm Motor PID Values */
     }

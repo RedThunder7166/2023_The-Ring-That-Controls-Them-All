@@ -6,10 +6,11 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.util.ClawUtils;
 import frc.robot.Constants.Clawstants;
 
-public class Wrist {
+public class Wrist extends SubsystemBase {
     private WPI_TalonFX m_wristMotor;
     private double wristAngleInEncoderUnits = 0;
     private double wristAngleInDegrees = 0;
@@ -28,7 +29,7 @@ public class Wrist {
 
         m_wristMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
 
-        m_wristMotor.setNeutralMode(NeutralMode.Coast);
+        m_wristMotor.setNeutralMode(NeutralMode.Brake);
 
         m_wristMotor.configMotionAcceleration(6000);
         m_wristMotor.configMotionCruiseVelocity(7000);
@@ -42,6 +43,10 @@ public class Wrist {
         
         return singleton;
         
+    }
+
+    public void driveWrist(double speed){
+        m_wristMotor.set(speed);
     }
 
     public void setAngle(double wristAngle){
