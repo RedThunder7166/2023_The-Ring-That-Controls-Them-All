@@ -18,9 +18,12 @@ import frc.robot.subsystems.*;
 import frc.robot.subsystems.theCLAAAWWW.ClawState;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
@@ -48,10 +51,9 @@ public class RobotContainer {
     private final JoystickButton nodeOne = new JoystickButton(operator, 1);
     private final JoystickButton nodeTwo = new JoystickButton(operator, 2);
 
-
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
-    //private final PnuematicSubsystem s_PneumaticsHub = new PnuematicSubsystem();
+    // private final PnuematicSubsystem s_PneumaticsHub = new PnuematicSubsystem();
     private final theCLAAAWWW s_Claaawww = new theCLAAAWWW();
     private final GripperSubsystem s_GripperSubsystem = new GripperSubsystem();
     private final Wrist s_wrist = Wrist.getInstance();
@@ -79,7 +81,9 @@ public class RobotContainer {
                 () -> 
                 s_wrist.driveWrist(m_Operator.getLeftY()), 
                 s_wrist)
-        );
+        
+               );
+                s_Claaawww.setDefaultCommand(new RunCommand(() -> s_Claaawww.drive(), s_Claaawww));
 
 
    //     s_Claaawww.setDefaultCommand(new InstantCommand(() -> s_Claaawww.stop(),s_Claaawww));
@@ -90,9 +94,11 @@ public class RobotContainer {
     }
 
     /**
-     * Use this method to define your button->command mappings. Buttons can be created by
+     * Use this method to define your button->command mappings. Buttons can be
+     * created by
      * instantiating a {@link GenericHID} or one of its subclasses ({@link
-     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+     * it to a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
@@ -108,25 +114,20 @@ public class RobotContainer {
         // wristLeft.onTrue(new InstantCommand(() -> s_Claaawww.wristLeft()));
         // wristRight.onTrue(new InstantCommand(() -> s_Claaawww.wristRight()));
 
-
         // when up or down button is unpressed, stop moving the claw
         // when stop button is pressed, stop moving the claw
         // armUp.onFalse(new InstantCommand(() -> s_Claaawww.armStop()));
         // armDown.onFalse(new InstantCommand(() -> s_Claaawww.armStop()));
-        // armOffset.onTrue(new InstantCommand(() -> s_Claaawww.setArmOffsets())); 
+        // armOffset.onTrue(new InstantCommand(() -> s_Claaawww.setArmOffsets()));
         // wristLeft.onFalse(new InstantCommand(() -> s_Claaawww.wristStop()));
         // wristRight.onFalse(new InstantCommand(() -> s_Claaawww.wristStop()));
 
+        /* operator Buttons */
 
-
-        /*operator Buttons */
-        
-     //   nodeOne.onTrue(new InstantCommand(() -> s_Claaawww.setClawstate(ClawState.LOADING)));
+        // nodeOne.onTrue(new InstantCommand(() ->
+        // s_Claaawww.setClawstate(ClawState.LOADING)));
         nodeOne.onTrue(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne", true)));
         nodeOne.onFalse(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne", false)));
-
-      
-
 
     }
 

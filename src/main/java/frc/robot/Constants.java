@@ -187,7 +187,7 @@ public final class Constants {
         public static final int ClawEncoder = 29;
         // public static final int PotentiometerID = 0;
         
-        public static final double armFeedForward = 0.03;
+        public static final double armFeedForward = 0.05;
         public static final double wristFeedForward = 0.03;
 
         public static final double ClawLoadingToLowPosition = 30000; // thirty-thousand

@@ -7,6 +7,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.XboxController;
 import frc.lib.util.ClawUtils;
 import frc.robot.Constants.Clawstants;
 
@@ -19,6 +20,8 @@ public class Arm {
 
     private static Arm singleton;
 
+    private XboxController xbox = new XboxController(3);
+
     /*
      * Left Motor - Leader
      * Right Motor - Follower - NEVER SET OR READ TO/FROM RIGHT MOTOR, DO ALL
@@ -29,9 +32,9 @@ public class Arm {
         m_armMotorLeft = new WPI_TalonFX(Constants.Clawstants.ClawMotorLeftID);
         m_armMotorRight = new WPI_TalonFX(Constants.Clawstants.ClawMotorRightID);
 
-        m_armMotorLeft.config_kP(0, 0.2);
+        m_armMotorLeft.config_kP(0, 0.5);
         m_armMotorLeft.config_kI(0, 0);
-        m_armMotorLeft.config_kD(0, .1);
+        m_armMotorLeft.config_kD(0, 0);
         m_armMotorLeft.configClosedLoopPeakOutput(0, .2);
 
         m_armMotorLeft.setInverted(true);
@@ -62,12 +65,13 @@ public class Arm {
         armAngleInDegrees = armAngle;
         armAngleInEncoderUnits = ClawUtils.degreesToEncoderUnits(armAngle, Clawstants.armGearRatio);
 
+        
         m_armMotorLeft.set( 
         ControlMode.MotionMagic,
         armAngleInEncoderUnits,
         DemandType.ArbitraryFeedForward,
         Clawstants.armFeedForward * java.lang.Math
-            .cos(ClawUtils.encoderUnitsToDegrees(Math.toRadians(m_armMotorLeft.getSelectedSensorPosition()), Constants.Clawstants.armGearRatio)));
+             .cos(Math.toRadians(ClawUtils.encoderUnitsToDegrees(m_armMotorLeft.getSelectedSensorPosition(), Constants.Clawstants.armGearRatio))));
     }
 
     public void zeroEncoder() {
@@ -75,6 +79,10 @@ public class Arm {
         // m_armMotorRight.setSelectedSensorPosition(0);
     
       }
+
+    public void drive(double yawss){
+        m_armMotorLeft.set(ControlMode.PercentOutput, xbox.getLeftY());
+    }
 
     public double getAngle(){
         return armAngleInDegrees;

@@ -8,13 +8,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Arm;
 import frc.robot.Wrist;
-import com.ctre.phoenix.sensors.CANCoder;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import frc.robot.Constants.Clawstants;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 public class theCLAAAWWW extends SubsystemBase {
   /** Creates a new theCLAAAWWW. */
   private Buttons m_Buttons = new Buttons();
@@ -90,8 +85,6 @@ public class theCLAAAWWW extends SubsystemBase {
     //   gripperMotor.set(0);
     // }
 
-      xbox.getLeftY();
-
 
     SmartDashboard.putString("ClawState", clawState.name());
 
@@ -135,7 +128,9 @@ private void toggleCube(){
 
 }
 
-
+public void drive(){
+  arm.drive(xbox.getLeftY() * 0.01);
+}
 
 
 
