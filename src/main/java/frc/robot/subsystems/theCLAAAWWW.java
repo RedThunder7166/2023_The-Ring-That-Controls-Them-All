@@ -10,10 +10,11 @@ import frc.robot.Arm;
 import frc.robot.Wrist;
 import frc.robot.Constants.Clawstants;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.lib.util.ClawUtils;
 public class theCLAAAWWW extends SubsystemBase {
   /** Creates a new theCLAAAWWW. */
   private Buttons m_Buttons = new Buttons();
-  private XboxController xbox = new XboxController(4);
+  //private XboxController xbox = new XboxController(1);
   public enum ClawState {
   
     LOADING, LOW, MEDIUM, HIGH
@@ -39,14 +40,13 @@ public class theCLAAAWWW extends SubsystemBase {
     // This method will be called once per scheduler run
     previousState = clawState;
 
-    if (m_Buttons.isPressed(1)) {
-      clawState = ClawState.LOADING;
-    } else if (m_Buttons.isPressed(2)) {
-      clawState = ClawState.LOW;
-    }
-      else if (m_Buttons.isPressed(3)){
-        clawState = ClawState.HIGH;
-      }
+    // if (m_Buttons.isPressed(1)) {
+    //   clawState = ClawState.LOADING;
+    // } else if (m_Buttons.isPressed(2)) {
+    //   clawState = ClawState.LOW;
+    // } else if (m_Buttons.isPressed(3)) {
+    //   clawState = ClawState.HIGH;
+    // }
 
     //Check to see if state has changed before moving the arm or claw.
     if (clawState != previousState) {
@@ -128,8 +128,9 @@ private void toggleCube(){
 
 }
 
-public void drive(){
-  arm.drive(xbox.getLeftY() * 0.01);
+public void drive(double speed){
+  arm.drive(speed * 0.25);
+
 }
 
 

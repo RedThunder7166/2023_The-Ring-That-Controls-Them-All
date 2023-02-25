@@ -185,6 +185,7 @@ public final class Constants {
         public static final int ClawMotorLeftID = 26;
         public static final int ClawMotorRightID = 25;
         public static final int ClawEncoder = 29;
+        public static final int wristEncoder = 30;
         // public static final int PotentiometerID = 0;
         
         public static final double armFeedForward = 0.05;

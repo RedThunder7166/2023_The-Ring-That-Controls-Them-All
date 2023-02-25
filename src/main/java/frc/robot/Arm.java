@@ -37,7 +37,7 @@ public class Arm {
         m_armMotorLeft.config_kD(0, 0);
         m_armMotorLeft.configClosedLoopPeakOutput(0, .2);
 
-        m_armMotorLeft.setInverted(true);
+        m_armMotorLeft.setInverted(false);
 
         m_armMotorRight.follow(m_armMotorLeft);
         m_armMotorRight.setInverted(InvertType.OpposeMaster);
@@ -80,8 +80,8 @@ public class Arm {
     
       }
 
-    public void drive(double yawss){
-        m_armMotorLeft.set(ControlMode.PercentOutput, xbox.getLeftY());
+    public void drive(double percent){
+        m_armMotorLeft.set(ControlMode.PercentOutput, percent);
     }
 
     public double getAngle(){
