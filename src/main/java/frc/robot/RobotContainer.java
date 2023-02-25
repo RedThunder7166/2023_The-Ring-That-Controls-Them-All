@@ -30,6 +30,7 @@ public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     // private final Joystick operator = new Joystick(2);
+    private final Buttons m_stupidButtons = new Buttons();
     private final CommandXboxController m_Operator = new CommandXboxController(1);
 
     /* Drive Controls */
@@ -54,9 +55,6 @@ public class RobotContainer {
     //   private final JoystickButton wristDownButton = new JoystickButton(operator, 2);
     //   private final JoystickButton armUpButton = new JoystickButton(operator, 4);
     //   private final JoystickButton armDownButton = new JoystickButton(operator, 5);
-    //   private final JoystickButton gripperCloseCone = new JoystickButton(operator, 0);
-    //   private final JoystickButton gripperCloseCube = new JoystickButton(operator, 0);
-    //   private final JoystickButton gripperOpen = new JoystickButton(operator, 0);
     //   private final JoystickButton EMERGENCYSTOP = new JoystickButton(operator, 0);
 
 
@@ -87,15 +85,14 @@ public class RobotContainer {
                                 .driveGripper(m_Operator.getRightTriggerAxis() - m_Operator.getLeftTriggerAxis()),
                         s_GripperSubsystem));
 
-        // s_wrist.setDefaultCommand(
-        //         new RunCommand(
-        //                 () -> s_wrist.driveWrist(m_Operator.getLeftY()),
-        //                 s_wrist)
-        // );
-        // s_Claaawww.setDefaultCommand(new RunCommand(() -> s_Claaawww.drive(m_Operator.getRightY()), s_Claaawww));
+        s_wrist.setDefaultCommand(
+                new RunCommand(
+                        () -> s_wrist.driveWrist(m_Operator.getLeftY()),
+                        s_wrist)
+        );
+        s_Claaawww.setDefaultCommand(new RunCommand(() -> s_Claaawww.drive(m_Operator.getRightY()), s_Claaawww));
 
-        // s_Claaawww.setDefaultCommand(new InstantCommand(() ->
-        // s_Claaawww.stop(),s_Claaawww));
+       // s_Claaawww.setDefaultCommand(new InstantCommand(() -> s_Claaawww.stop(),s_Claaawww));
 
         // Configure the button bindings
 
@@ -110,6 +107,12 @@ public class RobotContainer {
      * it to a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
+    private static boolean[] buttonStates = {
+        false,
+        false,
+        false,
+        false
+    };
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
@@ -150,7 +153,62 @@ public class RobotContainer {
         // armDownButton.onTrue(new InstantCommand(() -> s_Claaawww.drive(-0.1)));
         // armDownButton.onFalse(new InstantCommand(() -> s_Claaawww.drive(0)));
 
-        
+        boolean[] oldButtonStates = buttonStates.clone();
+
+        if (m_stupidButtons.isPressed(1)) {
+            buttonStates[0] = true;
+        } else {
+            buttonStates[0] = false;
+        };
+        if (m_stupidButtons.isPressed(2)) {
+            buttonStates[1] = true;
+        } else {
+            buttonStates[1] = false;
+        };
+        if (m_stupidButtons.isPressed(3)) {
+            buttonStates[2] = true;
+
+        } else {
+            buttonStates[2] = false;
+
+        };
+        if (m_stupidButtons.isPressed(4)) {
+            buttonStates[3] = true;
+
+        } else {
+            buttonStates[3] = false;
+
+        };
+
+        if (buttonStates[0]) {
+            if (!oldButtonStates[0]) {
+                // s_wrist.driveWrist(0.1);
+                SmartDashboard.putNumber("WRIST: ", 0.1);
+            }
+        } else if (buttonStates[1]) {
+            if (!oldButtonStates[1]) {
+                // s_wrist.driveWrist(-0.1);
+                SmartDashboard.putNumber("WRIST: ", -0.1);
+            }
+        } else {
+            // s_wrist.driveWrist(0);
+            SmartDashboard.putNumber("WRIST: ", 0);
+        }
+
+        if (buttonStates[2]) {
+            if (!oldButtonStates[2]) {
+                // s_Claaawww.drive(0.1);
+                SmartDashboard.putNumber("ARM: ", 0.1);
+            }
+        } else if (buttonStates[3]) {
+            if (!oldButtonStates[3]) {
+                // s_Claaawww.drive(-0.1);
+                SmartDashboard.putNumber("ARM: ", -0.1);
+            }
+        } else {
+            // s_Claaawww.drive(0);
+            SmartDashboard.putNumber("ARM: ", 0);
+        }
 
     }
 
