@@ -40,8 +40,8 @@ public class Wrist extends SubsystemBase {
 
         wristAbsolute.configFactoryDefault();
         wristAbsolute.configSensorInitializationStrategy(SensorInitializationStrategy.BootToZero);
-        wristAbsolute.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
-        wristAbsolute.configMagnetOffset(-218); // WARNING: DO NOT CHANGE THIS UNLESS ENCODER HAS BEEN REMOVED AND PUT BACK ON
+        wristAbsolute.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+        wristAbsolute.configMagnetOffset(21); // WARNING: DO NOT CHANGE THIS UNLESS ENCODER HAS BEEN REMOVED AND PUT BACK ON
     }
 
     //Since we only have 1 arm, there is never a reason to have multiple arm objects. Thus, we use a singleton.
