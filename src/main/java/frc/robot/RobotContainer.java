@@ -29,7 +29,7 @@ import frc.robot.subsystems.theCLAAAWWW.ClawState;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
-    private final Joystick operator = new Joystick(2);
+    // private final Joystick operator = new Joystick(2);
     private final CommandXboxController m_Operator = new CommandXboxController(1);
 
     /* Drive Controls */
@@ -48,8 +48,19 @@ public class RobotContainer {
     private final JoystickButton wristRight = new JoystickButton(driver, XboxController.Button.kY.value);
 
     /* operator Buttons */
-    private final JoystickButton nodeOne = new JoystickButton(operator, 1);
-    private final JoystickButton nodeTwo = new JoystickButton(operator, 2);
+ //   private final JoystickButton nodeOne = new JoystickButton(operator, 1);
+   // private final JoystickButton nodeTwo = new JoystickButton(operator, 2);
+    //   private final JoystickButton wristUpButton = new JoystickButton(operator, 1);
+    //   private final JoystickButton wristDownButton = new JoystickButton(operator, 2);
+    //   private final JoystickButton armUpButton = new JoystickButton(operator, 4);
+    //   private final JoystickButton armDownButton = new JoystickButton(operator, 5);
+    //   private final JoystickButton gripperCloseCone = new JoystickButton(operator, 0);
+    //   private final JoystickButton gripperCloseCube = new JoystickButton(operator, 0);
+    //   private final JoystickButton gripperOpen = new JoystickButton(operator, 0);
+    //   private final JoystickButton EMERGENCYSTOP = new JoystickButton(operator, 0);
+
+
+
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -58,35 +69,33 @@ public class RobotContainer {
     private final GripperSubsystem s_GripperSubsystem = new GripperSubsystem();
     private final Wrist s_wrist = Wrist.getInstance();
 
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
     public RobotContainer() {
         s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
-                s_Swerve, 
-                () -> Math.pow(-driver.getRawAxis(translationAxis), 3), 
-                () -> Math.pow(-driver.getRawAxis(strafeAxis), 3), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
-            )
-        );
+                new TeleopSwerve(
+                        s_Swerve,
+                        () -> Math.pow(-driver.getRawAxis(translationAxis), 3),
+                        () -> Math.pow(-driver.getRawAxis(strafeAxis), 3),
+                        () -> -driver.getRawAxis(rotationAxis),
+                        () -> robotCentric.getAsBoolean()));
 
         s_GripperSubsystem.setDefaultCommand(
-            new RunCommand(
-                () ->
-                s_GripperSubsystem.driveGripper(m_Operator.getRightTriggerAxis() - m_Operator.getLeftTriggerAxis()), 
-                s_GripperSubsystem));
+                new RunCommand(
+                        () -> s_GripperSubsystem
+                                .driveGripper(m_Operator.getRightTriggerAxis() - m_Operator.getLeftTriggerAxis()),
+                        s_GripperSubsystem));
 
-        s_wrist.setDefaultCommand(
-            new RunCommand(
-                () -> 
-                s_wrist.driveWrist(m_Operator.getLeftY()), 
-                s_wrist)
-        
-               );
-                s_Claaawww.setDefaultCommand(new RunCommand(() -> s_Claaawww.drive(), s_Claaawww));
+        // s_wrist.setDefaultCommand(
+        //         new RunCommand(
+        //                 () -> s_wrist.driveWrist(m_Operator.getLeftY()),
+        //                 s_wrist)
+        // );
+        // s_Claaawww.setDefaultCommand(new RunCommand(() -> s_Claaawww.drive(m_Operator.getRightY()), s_Claaawww));
 
-
-   //     s_Claaawww.setDefaultCommand(new InstantCommand(() -> s_Claaawww.stop(),s_Claaawww));
+        // s_Claaawww.setDefaultCommand(new InstantCommand(() ->
+        // s_Claaawww.stop(),s_Claaawww));
 
         // Configure the button bindings
 
@@ -126,8 +135,22 @@ public class RobotContainer {
 
         // nodeOne.onTrue(new InstantCommand(() ->
         // s_Claaawww.setClawstate(ClawState.LOADING)));
-        nodeOne.onTrue(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne", true)));
-        nodeOne.onFalse(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne", false)));
+      //  nodeOne.onTrue(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne", true)));
+        //nodeOne.onFalse(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne", false)));
+
+        // wristUpButton.onTrue(new InstantCommand(() -> s_wrist.driveWrist(0.1)));
+        // wristUpButton.onFalse(new InstantCommand(() -> s_wrist.driveWrist(0)));
+
+        // wristDownButton.onTrue(new InstantCommand(() -> s_wrist.driveWrist(-0.1)));
+        // wristDownButton.onFalse(new InstantCommand(() -> s_wrist.driveWrist(0)));
+
+        // armUpButton.onTrue(new InstantCommand(() -> s_Claaawww.drive(0.1)));
+        // armUpButton.onFalse(new InstantCommand(() -> s_Claaawww.drive(0)));
+
+        // armDownButton.onTrue(new InstantCommand(() -> s_Claaawww.drive(-0.1)));
+        // armDownButton.onFalse(new InstantCommand(() -> s_Claaawww.drive(0)));
+
+        
 
     }
 
