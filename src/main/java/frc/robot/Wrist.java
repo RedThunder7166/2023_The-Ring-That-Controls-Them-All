@@ -8,11 +8,12 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.util.ClawUtils;
 import frc.robot.Constants.Clawstants;
 
-public class Wrist extends SubsystemBase {
+public class Wrist {
     private WPI_TalonFX m_wristMotor;
     private double wristAngleInEncoderUnits = 0;
     private double wristAngleInDegrees = 0;
@@ -24,10 +25,11 @@ public class Wrist extends SubsystemBase {
     private Wrist() {
         m_wristMotor = new WPI_TalonFX(Clawstants.ClawMotorWristID);
         wristAbsolute = new CANCoder(Clawstants.wristEncoder);
-        m_wristMotor.config_kP(0, 0.2);
+        m_wristMotor.config_kP(0, 1);
         m_wristMotor.config_kI(0, 0);
-        m_wristMotor.config_kD(0, .1);
-        m_wristMotor.configClosedLoopPeakOutput(0, .2);
+        m_wristMotor.config_kD(0, 0);
+        m_wristMotor.configClosedLoopPeakOutput(0, .5);
+        
 
         m_wristMotor.setInverted(false);
 
@@ -35,13 +37,17 @@ public class Wrist extends SubsystemBase {
 
         m_wristMotor.setNeutralMode(NeutralMode.Brake);
 
-        m_wristMotor.configMotionAcceleration(6000);
-        m_wristMotor.configMotionCruiseVelocity(7000);
-
         wristAbsolute.configFactoryDefault();
-        wristAbsolute.configSensorInitializationStrategy(SensorInitializationStrategy.BootToZero);
+        wristAbsolute.configSensorDirection(true);
+        wristAbsolute.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
         wristAbsolute.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
-        wristAbsolute.configMagnetOffset(21); // WARNING: DO NOT CHANGE THIS UNLESS ENCODER HAS BEEN REMOVED AND PUT BACK ON
+        wristAbsolute.configMagnetOffset(0); 
+
+        m_wristMotor.configMotionAcceleration(6000);
+        m_wristMotor.configMotionCruiseVelocity(7500);
+
+        m_wristMotor.setSelectedSensorPosition(ClawUtils.degreesToEncoderUnits(wristAbsolute.getAbsolutePosition(), 100));
+
     }
 
     //Since we only have 1 arm, there is never a reason to have multiple arm objects. Thus, we use a singleton.
@@ -79,14 +85,9 @@ public class Wrist extends SubsystemBase {
     }
 
     public void setAngle(double wristAngle){
-        wristAngleInDegrees = wristAngle;
-        this.wristAngleInEncoderUnits = ClawUtils.degreesToEncoderUnits(wristAngle, Constants.Clawstants.wristGearRatio);
-
         m_wristMotor.set(
          ControlMode.MotionMagic,
-         this.wristAngleInEncoderUnits,
-         DemandType.ArbitraryFeedForward,
-         Clawstants.wristFeedForward * java.lang.Math.cos(ClawUtils.encoderUnitsToDegrees(Math.toRadians(m_wristMotor.getSelectedSensorPosition()), Constants.Clawstants.wristGearRatio)));
+         ClawUtils.degreesToEncoderUnits(wristAngle, 100));
     }
 
     public void zeroEncoder() {
@@ -94,8 +95,8 @@ public class Wrist extends SubsystemBase {
         // m_armMotorRight.setSelectedSensorPosition(0);
       }
 
-    public double getAngle(){
-        return wristAngleInDegrees;
+    public double getWristAngle(){
+        return ClawUtils.encoderUnitsToDegrees(m_wristMotor.getSelectedSensorPosition(), 100);
     }
 
     public double getEncoderUnits(){
@@ -104,5 +105,17 @@ public class Wrist extends SubsystemBase {
 
     public double getRawEncoderUnits(){
         return m_wristMotor.getSelectedSensorPosition();
+    }
+
+    public double getWristAbsolute(){
+        return wristAbsolute.getAbsolutePosition();
+    }
+
+    public void drive(double speed){
+        m_wristMotor.set(speed);
+    }
+
+    public void syncEncoders(){
+        m_wristMotor.setSelectedSensorPosition(ClawUtils.degreesToEncoderUnits(wristAbsolute.getAbsolutePosition(), 100));
     }
 }

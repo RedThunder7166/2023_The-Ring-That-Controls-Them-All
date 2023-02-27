@@ -9,100 +9,64 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Arm;
 import frc.robot.Wrist;
 import frc.robot.Constants.Clawstants;
-import edu.wpi.first.wpilibj.XboxController;
+
+import java.lang.invoke.MethodHandles.Lookup.ClassOption;
+
 import frc.lib.util.ClawUtils;
+
 public class theCLAAAWWW extends SubsystemBase {
   /** Creates a new theCLAAAWWW. */
   private Buttons m_Buttons = new Buttons();
-  //private XboxController xbox = new XboxController(1);
   public enum ClawState {
   
-    LOADING, LOW, MEDIUM, HIGH
+    TRANSPORT, LOADING, LOW, MEDIUM, HIGH
   }
 
-  ClawState clawState;
-  ClawState previousState;
+  public ClawState previousState;
+  private double armAngle;
+
+
   Arm arm = Arm.getInstance();
   Wrist wrist = Wrist.getInstance();
+  public ClawState clawState = getState();
+
 
   // TODO Dont forget that EVERY thing needs a god forbidden PID.
 
   private boolean isToggled = false;
   private double closedPos = 0;
-  // ArmFeedforward armFeedForward = new ArmFeedforward(.21469, 0.43923, 2.0662);
 
   public theCLAAAWWW() {
-    clawState = ClawState.LOADING;
+    System.out.println("CONSTRUCTOR STATE: " + clawState.name());
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    previousState = clawState;
-
-    // if (m_Buttons.isPressed(1)) {
-    //   clawState = ClawState.LOADING;
-    // } else if (m_Buttons.isPressed(2)) {
-    //   clawState = ClawState.LOW;
-    // } else if (m_Buttons.isPressed(3)) {
-    //   clawState = ClawState.HIGH;
-    // }
-
-    //Check to see if state has changed before moving the arm or claw.
-    if (clawState != previousState) {
-      switch (clawState) {
-        case LOADING:
-          wrist.setAngle(0);
-          arm.setAngle(0);
-          break;
-        case LOW:
-          wrist.setAngle(0);
-          arm.setAngle(30);
-          break;
-        case HIGH:
-        wrist.setAngle(30);
-        arm.setAngle(45);
-          break;
-        case MEDIUM:
-          break;
-      }
-
+    SmartDashboard.putBoolean("Reset Encoder", arm.isResetEncoderPushed());
+    if(arm.isResetEncoderPushed()){
+      arm.zeroEncoder();
     }
 
-    // IMPORTANT - DO NOT DELETE
-    // setArmMotorsAngle(armAngle);
-   
-    // if (isToggled) {
-
-    //   gripperMotor.set(ControlMode.Position, closedPos);
-
-    // } else
-    //   gripperMotor.set(ControlMode.Position, Clawstants.openAll);
-
-    // // if (cancoder.getAbsolutePosition() < target) {
-    //   gripperMotor.set(0.1);
-    // } else {
-    //   gripperMotor.set(0);
+    // if(clawState != clawState.LOADING && clawState != clawState.TRANSPORT){
+    //   //System.out.println("getState: " + clawState.name());
+    clawState = getState();
     // }
-
-
+    
     SmartDashboard.putString("ClawState", clawState.name());
 
     SmartDashboard.putNumber("Arm Angle", arm.getAngle());
-    SmartDashboard.putNumber("Wrist Angle", arm.getAngle());
-
-
     SmartDashboard.putNumber("Arm Encoder", arm.getRawEncoderUnits());
+
+    SmartDashboard.putNumber("Wrist Absolute", wrist.getWristAbsolute());
+    SmartDashboard.putNumber("Wrist Angle", wrist.getWristAngle());
     SmartDashboard.putNumber("Wrist Encoder", wrist.getRawEncoderUnits());
-    SmartDashboard.getBoolean("Closed", isToggled);
     
-
+    SmartDashboard.getBoolean("Closed", isToggled);
   }
-/* Button things */
 
-public void setClawstate(ClawState CS) {
-
-  clawState = CS;
+public void syncEncoders(){
+  wrist.syncEncoders();
 }
 
 //*Create Claw close/open abilites */
@@ -128,12 +92,54 @@ private void toggleCube(){
 
 }
 
-public void drive(double speed){
+public void drive(double speed, double wristSpeed){
   arm.drive(speed * 0.25);
+  wrist.drive(wristSpeed * 0.25);
 
 }
 
+public void setArmAngle(double armAngle){
+  this.armAngle = armAngle;
+  arm.setAngle(armAngle);
+}
 
+public void setWristAngle(double wristAngle){
+  wrist.setAngle(wristAngle);
+}
+
+public double getWristAngle(){
+  return wrist.getWristAngle();
+}
+
+public double getArmAngle(){
+  return arm.getAngle();
+}
+
+public ClawState getState(){
+
+  if(arm.getAngle() <= 10 && wrist.getWristAbsolute() > Clawstants.wristMedium){
+    return ClawState.LOADING;
+  } 
+  else if (arm.getAngle() <= 10 && wrist.getWristAbsolute() < Clawstants.wristMedium){
+    return ClawState.TRANSPORT;
+  } 
+  else if (arm.getAngle() <= 43){
+    return ClawState.LOW;
+  }
+  else if(arm.getAngle() > 43 && arm.getAngle() < 82.5){
+    return ClawState.MEDIUM;
+  }
+  else if(arm.getAngle() >= 82.5){
+    return ClawState.HIGH;
+  }
+
+  return null;
+}
+
+public void setState(ClawState newState){
+  System.out.println("SETTING STATE TO newState: " + newState.name());
+  clawState = newState;
+}
 
 // public void driveGripper(double speed) {
 //   double kMax = 1000; // TODO change value to encoder values set via Tuner

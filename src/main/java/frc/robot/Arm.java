@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.concurrent.locks.ReentrantLock;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -7,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.lib.util.ClawUtils;
 import frc.robot.Constants.Clawstants;
@@ -22,6 +25,8 @@ public class Arm {
 
     private XboxController xbox = new XboxController(3);
 
+    private DigitalInput resetEncoder = new DigitalInput(0);
+
     /*
      * Left Motor - Leader
      * Right Motor - Follower - NEVER SET OR READ TO/FROM RIGHT MOTOR, DO ALL
@@ -35,9 +40,9 @@ public class Arm {
         m_armMotorLeft.config_kP(0, 0.5);
         m_armMotorLeft.config_kI(0, 0);
         m_armMotorLeft.config_kD(0, 0);
-        m_armMotorLeft.configClosedLoopPeakOutput(0, .2);
+        m_armMotorLeft.configClosedLoopPeakOutput(0, .4);
 
-        m_armMotorLeft.setInverted(false);
+        m_armMotorLeft.setInverted(true);
 
         m_armMotorRight.follow(m_armMotorLeft);
         m_armMotorRight.setInverted(InvertType.OpposeMaster);
@@ -61,6 +66,11 @@ public class Arm {
         
     }
 
+    public boolean isResetEncoderPushed(){
+        return !resetEncoder.get();
+    }
+
+
     public void setAngle(double armAngle){
         armAngleInDegrees = armAngle;
         armAngleInEncoderUnits = ClawUtils.degreesToEncoderUnits(armAngle, Clawstants.armGearRatio);
@@ -72,6 +82,7 @@ public class Arm {
         DemandType.ArbitraryFeedForward,
         Clawstants.armFeedForward * java.lang.Math
              .cos(Math.toRadians(ClawUtils.encoderUnitsToDegrees(m_armMotorLeft.getSelectedSensorPosition(), Constants.Clawstants.armGearRatio))));
+
     }
 
     public void zeroEncoder() {
@@ -85,7 +96,7 @@ public class Arm {
     }
 
     public double getAngle(){
-        return armAngleInDegrees;
+        return ClawUtils.encoderUnitsToDegrees(m_armMotorLeft.getSelectedSensorPosition(), Clawstants.armGearRatio);
     }
 
     public double getEncoderUnits(){

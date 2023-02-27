@@ -119,4 +119,8 @@ public class SwerveModule {
             getAngle()
         );
     }
+
+    public double getDriveOutput(){
+        return mDriveMotor.getMotorOutputPercent();
+    }
 }

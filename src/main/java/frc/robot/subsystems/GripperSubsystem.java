@@ -33,23 +33,23 @@ public void driveGripper(double speed){
   //close anymore.  Max is set to 330 so it does not go past 360 which
   //loops back around to zero and breaks the follow logic
   double maxSpeed = 1;
-  double maxClosed = 5;
-  double maxOpen = 350;
+  double maxClosed = 20;
+  double maxOpen = 320;
   double position = gripperAbsolute.getAbsolutePosition();
   boolean isMaxClosed = gripperAbsolute.getAbsolutePosition() <= maxClosed;
   boolean isMaxOpen = gripperAbsolute.getAbsolutePosition() >= maxOpen;
   boolean gripperClosing = speed > 0;
   boolean gripperOpening = speed < 0;
 
-   if(isMaxClosed && gripperClosing){
-     gripperMotor.set(0);
-   } else if(isMaxOpen && gripperOpening){
-     gripperMotor.set(0);
-     } else {
-       gripperMotor.set(maxSpeed * speed);
-       }
+  //  if(isMaxClosed && gripperClosing){
+  //    gripperMotor.set(0);
+  //  } else if(isMaxOpen && gripperOpening){
+  //    gripperMotor.set(0);
+  //    } else {
+  //      gripperMotor.set(maxSpeed * speed);
+  //      }
 
-//   gripperMotor.set(speed);
+   gripperMotor.set(speed);
 
   SmartDashboard.putBoolean("gripperClosing", gripperClosing);
   SmartDashboard.putBoolean("gripperOpening", gripperOpening);
