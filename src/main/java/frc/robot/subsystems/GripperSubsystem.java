@@ -21,33 +21,36 @@ public class GripperSubsystem extends SubsystemBase {
     gripperAbsolute.configFactoryDefault();
     gripperAbsolute.configSensorInitializationStrategy(SensorInitializationStrategy.BootToZero);
     gripperAbsolute.configMagnetOffset(-121.734); // WARNING: DO NOT CHANGE THIS UNLESS ENCODER HAS BEEN REMOVED AND PUT BACK ON
+
   }// This value sets zero to ~2 degrees 
 
   PWMVictorSPX gripperMotor = new PWMVictorSPX(0);
+   
 
 // Postive value = close
 // Negative value = open
 public void driveGripper(double speed){
-  //WARNING: Gripper continues traveling 15-30 degrees past
-  //max and min position.  Zero is set to where the gripper CANNOT
-  //close anymore.  Max is set to 330 so it does not go past 360 which
-  //loops back around to zero and breaks the follow logic
   double maxSpeed = 1;
-  double maxClosed = 20;
-  double maxOpen = 320;
+  double maxClosed = 5;
+  double maxOpen = 350;
   double position = gripperAbsolute.getAbsolutePosition();
   boolean isMaxClosed = gripperAbsolute.getAbsolutePosition() <= maxClosed;
   boolean isMaxOpen = gripperAbsolute.getAbsolutePosition() >= maxOpen;
   boolean gripperClosing = speed > 0;
   boolean gripperOpening = speed < 0;
+  //WARNING: Gripper continues traveling 15-30 degrees past
+  //max and min position.  Zero is set to where the gripper CANNOT
+  //close anymore.  Max is set to 330 so it does not go past 360 which
+  //loops back around to zero and breaks the follow logic
+  
 
-  //  if(isMaxClosed && gripperClosing){
-  //    gripperMotor.set(0);
-  //  } else if(isMaxOpen && gripperOpening){
-  //    gripperMotor.set(0);
-  //    } else {
-  //      gripperMotor.set(maxSpeed * speed);
-  //      }
+   if(isMaxClosed && gripperClosing){
+     gripperMotor.set(0);
+   } else if(isMaxOpen && gripperOpening){
+     gripperMotor.set(0);
+     } else {
+       gripperMotor.set(maxSpeed * speed);
+       }
 
    gripperMotor.set(speed);
 

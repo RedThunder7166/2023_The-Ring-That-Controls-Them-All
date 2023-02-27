@@ -213,6 +213,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return  s_Swerve.followTrajectoryCommand(autoChooser.getSelected(), true);
+        // return s_Swerve.followTrajectoryCommand(autoChooser.getSelected(), true);
+        return new autoCommandGroup(s_Swerve, s_Claaawww);
     }
 }
