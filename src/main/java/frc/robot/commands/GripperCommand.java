@@ -16,7 +16,7 @@ public class GripperCommand extends CommandBase {
   private double targetAngle;
   private double initialAngle;
   private boolean helloFelicia = false;
-  
+
   /** Creates a new WristCommand. */
   public GripperCommand(GripperSubsystem GripperSubsystem, double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -34,29 +34,32 @@ public class GripperCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //System.out.println("BEGIN EXECUTE METHOD");
+    // System.out.println("BEGIN EXECUTE METHOD");
     // if (initialAngle < targetAngle){
-    //   System.out.println("" + initialAngle + " is less than " + targetAngle);
-    //   if(clawSubsystem.getWristAngle() > targetAngle){
-    //     System.out.println("" + clawSubsystem.getWristAngle() + " is greater than " + targetAngle);
-    //     byeFelicia = !byeFelicia;
-    //   }
+    // System.out.println("" + initialAngle + " is less than " + targetAngle);
+    // if(clawSubsystem.getWristAngle() > targetAngle){
+    // System.out.println("" + clawSubsystem.getWristAngle() + " is greater than " +
+    // targetAngle);
+    // byeFelicia = !byeFelicia;
+    // }
     // }else{
-    //   if(clawSubsystem.getWristAngle() < targetAngle){
-    //     System.out.println("" + clawSubsystem.getWristAngle() + " is less than " + targetAngle);
-    //     byeFelicia = !byeFelicia;
-    //   }
+    // if(clawSubsystem.getWristAngle() < targetAngle){
+    // System.out.println("" + clawSubsystem.getWristAngle() + " is less than " +
+    // targetAngle);
+    // byeFelicia = !byeFelicia;
+    // }
 
-   // if((Math.abs(.getGripperAngle() - targetAngle) < 2)){
-      helloFelicia = !helloFelicia;
-    }
-    //System.out.println("END EXECUTE METHOD");
+    // if((Math.abs(.getGripperAngle() - targetAngle) < 2)){
+    helloFelicia = !helloFelicia;
+    // }
+    // System.out.println("END EXECUTE METHOD");
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-   helloFelicia = !helloFelicia;
-  //  GripperSubsystem.setWristAngle(targetAngle);
+    helloFelicia = !helloFelicia;
+    // GripperSubsystem.setWristAngle(targetAngle);
 
   }
 

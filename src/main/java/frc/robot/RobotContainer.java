@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -35,7 +35,8 @@ import frc.robot.subsystems.theCLAAAWWW.ClawState;
  */
 public class RobotContainer {
     /* Controllers */
-    private final Joystick driver = new Joystick(0);
+    // private final Joystick driver = new Joystick(0);
+    private final XboxController driver = new XboxController(0);
     // private final Joystick operator = new Joystick(2);
     private final Buttons m_stupidButtons = new Buttons();
     private final XboxController m_Operator = new XboxController(1);
@@ -123,6 +124,7 @@ public class RobotContainer {
         // Configure the button bindings
 
         configureButtonBindings();
+        
     }
 
     /**
@@ -146,7 +148,9 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())
+        
+        );
         
         // lowButton.onTrue(new ClawCommand(s_Claaawww, ClawState.LOW));
         // highButton.onTrue(new ClawCommand(s_Claaawww, ClawState.HIGH));
@@ -200,8 +204,6 @@ public class RobotContainer {
 
         // armDownButton.onTrue(new InstantCommand(() -> s_Claaawww.drive(-0.1)));
         // armDownButton.onFalse(new InstantCommand(() -> s_Claaawww.drive(0)));
-
-        
 
     }
 
