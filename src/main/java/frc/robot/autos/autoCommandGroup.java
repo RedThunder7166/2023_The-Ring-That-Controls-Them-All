@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.Constants.Clawstants;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.DriveMeters;
 import frc.robot.commands.WristCommand;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.theCLAAAWWW;
@@ -24,11 +25,12 @@ public class autoCommandGroup extends SequentialCommandGroup {
   /** Creates a new autoCommandGroup. */
 
   public autoCommandGroup(Swerve s_Swerve, theCLAAAWWW clawSubsystem) {
- 
+
     addCommands(
       // move backwards
-      new InstantCommand(() -> s_Swerve.drive(
-        new Translation2d(-1, 0), 0, true, true), s_Swerve),
+      // new InstantCommand(() -> s_Swerve.drive(
+      //   new Translation2d(-1, 0), 0, true, true), s_Swerve),
+      new DriveMeters(s_Swerve, -1, 0, 0),
       // move the wrist to loading
       new WristCommand(clawSubsystem, Clawstants.wristLoading),
       // gripper grab the piece
@@ -44,13 +46,15 @@ public class autoCommandGroup extends SequentialCommandGroup {
       new ArmCommand(clawSubsystem, Clawstants.armHigh),
 
       // move forwards
-      new InstantCommand(() -> s_Swerve.drive(
-        new Translation2d(1, 0), 0, true, true), s_Swerve),
+      // new InstantCommand(() -> s_Swerve.drive(
+      //   new Translation2d(1, -0), 0, true, true), s_Swerve),
+      new DriveMeters(s_Swerve, 1, 0, 0),
       // gripper lets go of piece
 
       // move backwards
-      new InstantCommand(() -> s_Swerve.drive(
-        new Translation2d(-1, 0), 0, true, true), s_Swerve),
+      // new InstantCommand(() -> s_Swerve.drive(
+      //   new Translation2d(-1, 0), 0, true, true), s_Swerve),
+      new DriveMeters(s_Swerve, -1, 0, 0),
       // move the arm to medium
       new ArmCommand(clawSubsystem, Clawstants.armMedium),
       // move the wrist to loading
@@ -60,8 +64,9 @@ public class autoCommandGroup extends SequentialCommandGroup {
 
       // do a 180 AND
       // go to the piece on the ground
-      new InstantCommand(() -> s_Swerve.drive(
-        new Translation2d(-3, 0), 180, true, true), s_Swerve)
+      // new InstantCommand(() -> s_Swerve.drive(
+      //   new Translation2d(-3, 0), 180, true, true), s_Swerve)
+      new DriveMeters(s_Swerve, -3, 0, 0)
     );
   }
 }

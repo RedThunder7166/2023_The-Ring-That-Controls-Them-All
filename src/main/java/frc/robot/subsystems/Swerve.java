@@ -60,10 +60,10 @@ public class Swerve extends SubsystemBase {
                         translation.getY(),
                         rotation,
                         getYaw())
-                        : new ChassisSpeeds(
-                                translation.getX(),
-                                translation.getY(),
-                                rotation));
+                    : new ChassisSpeeds(
+                            translation.getX(),
+                            translation.getY(),
+                            rotation));
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
         for (SwerveModule mod : mSwerveMods) {
@@ -159,7 +159,6 @@ public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFir
         )
     );
 }
-
 
 
 
