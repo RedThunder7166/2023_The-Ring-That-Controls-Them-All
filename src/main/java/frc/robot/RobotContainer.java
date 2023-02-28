@@ -158,8 +158,9 @@ public class RobotContainer {
 
         //s_Claaawww.setState(ClawState.LOADING);
 
-        rightBumper.whileTrue(new RunCommand(() -> s_Claaawww.drive(-m_Operator.getRightY(), m_Operator.getLeftY()), s_Claaawww));
-        rightBumper.onFalse(new RunCommand(() -> s_Claaawww.drive(0, 0), s_Claaawww));
+        // rightBumper.whileTrue(new RunCommand(() -> s_Claaawww.drive(-m_Operator.getRightY(), m_Operator.getLeftY()), s_Claaawww));
+        // rightBumper.onFalse(new RunCommand(() -> s_Claaawww.drive(0, 0), s_Claaawww));
+        
         //Set arm speed to FF*cos(getArmAngle)
         //e.g. .05*sin(0) = 0
         //e.g. .05sin(90) = .05

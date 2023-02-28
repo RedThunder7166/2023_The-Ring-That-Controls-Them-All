@@ -25,7 +25,8 @@ public class Arm {
 
     private XboxController xbox = new XboxController(3);
 
-    private DigitalInput resetEncoder = new DigitalInput(0);
+    private DigitalInput armSwitch = new DigitalInput(0);
+
 
     /*
      * Left Motor - Leader
@@ -66,8 +67,8 @@ public class Arm {
         
     }
 
-    public boolean isResetEncoderPushed(){
-        return !resetEncoder.get();
+    public boolean isArmSwitchPressed(){
+        return !armSwitch.get();
     }
 
 
@@ -92,6 +93,10 @@ public class Arm {
       }
 
     public void drive(double percent){
+        // when limit switch is pressed and we are going down (into robot), go to zero
+        if (isArmSwitchPressed() && percent < 0) {
+            percent = 0;
+        }
         m_armMotorLeft.set(ControlMode.PercentOutput, percent);
     }
 
