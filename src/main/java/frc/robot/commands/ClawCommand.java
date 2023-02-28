@@ -56,47 +56,47 @@ public class ClawCommand extends SequentialCommandGroup {
     //   new PrintCommand("Finished Sequence"));
 
 
-    if(
-      (clawSubsystem.getState() == ClawState.LOW || clawSubsystem.getState() == ClawState.TRANSPORT) 
-      && 
-      (targetState == ClawState.LOADING || targetState == ClawState.TRANSPORT)){
-      addCommands(
-        new PrintCommand("RUNNING OPTION 1"),
-        new InstantCommand(() -> clawSubsystem.syncEncoders()),
-        new PrintCommand("Moving Arm"),
-        new ArmCommand(clawSubsystem, Clawstants.armTransition), 
-        new PrintCommand("Moving Wrist"),
-        new WristCommand(clawSubsystem, Clawstants.wristLoading),
-        new PrintCommand("Moving Arm"),
-        new ArmCommand(clawSubsystem, Clawstants.armLoading),
-        new PrintCommand("Finished Sequence"));
-    }
-    else if(
-      (clawSubsystem.getState() == ClawState.LOADING) && (targetState == ClawState.LOW || targetState == ClawState.TRANSPORT)){
-      addCommands(
-        new PrintCommand("RUNNING OPTION 2"),
-        new InstantCommand(() -> clawSubsystem.syncEncoders()),
-        new WristCommand(clawSubsystem, Clawstants.wristGrabbed),
-        new ArmCommand(clawSubsystem, Clawstants.armTransition), 
-        new WristCommand(clawSubsystem, targetWristAngle),
-        new ArmCommand(clawSubsystem, targetArmAngle));
-    }
-    else if(clawSubsystem.getState() == ClawState.LOADING){
-      addCommands(
-        new PrintCommand("RUNNING OPTION 3"),
-        new PrintCommand("clawState: " + clawSubsystem.clawState.name()),
-        new PrintCommand("targetState: " + targetState),
-        new InstantCommand(() -> clawSubsystem.syncEncoders()),
-        new WristCommand(clawSubsystem, Clawstants.wristGrabbed),
-        new ArmCommand(clawSubsystem, targetArmAngle), 
-        new WristCommand(clawSubsystem, targetWristAngle));
-    } else{
-      addCommands(
-        new PrintCommand("RUNNING OPTION 4"),
-        new InstantCommand(() -> clawSubsystem.syncEncoders()),
-        new ArmCommand(clawSubsystem, targetArmAngle),
-        new WristCommand(clawSubsystem, targetWristAngle));
-    }
+    // if(
+    //   (clawSubsystem.getState() == ClawState.LOW || clawSubsystem.getState() == ClawState.TRANSPORT) 
+    //   && 
+    //   (targetState == ClawState.LOADING || targetState == ClawState.TRANSPORT)){
+    //   addCommands(
+    //     new PrintCommand("RUNNING OPTION 1"),
+    //     new InstantCommand(() -> clawSubsystem.syncEncoders()),
+    //     new PrintCommand("Moving Arm"),
+    //     new ArmCommand(clawSubsystem, Clawstants.armTransition), 
+    //     new PrintCommand("Moving Wrist"),
+    //     new WristCommand(clawSubsystem, Clawstants.wristLoading),
+    //     new PrintCommand("Moving Arm"),
+    //     new ArmCommand(clawSubsystem, Clawstants.armLoading),
+    //     new PrintCommand("Finished Sequence"));
+    // }
+    // else if(
+    //   (clawSubsystem.getState() == ClawState.LOADING) && (targetState == ClawState.LOW || targetState == ClawState.TRANSPORT)){
+    //   addCommands(
+    //     new PrintCommand("RUNNING OPTION 2"),
+    //     new InstantCommand(() -> clawSubsystem.syncEncoders()),
+    //     new WristCommand(clawSubsystem, Clawstants.wristGrabbed),
+    //     new ArmCommand(clawSubsystem, Clawstants.armTransition), 
+    //     new WristCommand(clawSubsystem, targetWristAngle),
+    //     new ArmCommand(clawSubsystem, targetArmAngle));
+    // }
+    // else if(clawSubsystem.getState() == ClawState.LOADING){
+    //   addCommands(
+    //     new PrintCommand("RUNNING OPTION 3"),
+    //     new PrintCommand("clawState: " + clawSubsystem.clawState.name()),
+    //     new PrintCommand("targetState: " + targetState),
+    //     new InstantCommand(() -> clawSubsystem.syncEncoders()),
+    //     new WristCommand(clawSubsystem, Clawstants.wristGrabbed),
+    //     new ArmCommand(clawSubsystem, targetArmAngle), 
+    //     new WristCommand(clawSubsystem, targetWristAngle));
+    // } else{
+    //   addCommands(
+    //     new PrintCommand("RUNNING OPTION 4"),
+    //     new InstantCommand(() -> clawSubsystem.syncEncoders()),
+    //     new ArmCommand(clawSubsystem, targetArmAngle),
+    //     new WristCommand(clawSubsystem, targetWristAngle));
+    // }
 
     
     

@@ -113,7 +113,7 @@ public class RobotContainer {
         //                 s_wrist)
         // );
 
-        //s_Claaawww.setDefaultCommand(new RunCommand(() -> s_Claaawww.drive(-m_Operator.getRightY(), m_Operator.getLeftY()), s_Claaawww));
+        s_Claaawww.setDefaultCommand(new RunCommand(() -> s_Claaawww.drive(-m_Operator.getRightY(), m_Operator.getLeftY()), s_Claaawww));
 
         PathPlannerTrajectory thingTraj = PathPlanner.loadPath("thing", new PathConstraints(3, 5));
 
@@ -148,16 +148,16 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         
-        lowButton.onTrue(new ClawCommand(s_Claaawww, ClawState.LOW));
-        highButton.onTrue(new ClawCommand(s_Claaawww, ClawState.HIGH));
-        loadingButton.onTrue(new ClawCommand(s_Claaawww, ClawState.LOADING));
-        mediumButton.onTrue(new ClawCommand(s_Claaawww, ClawState.MEDIUM));
-        leftBumper.onTrue(new ClawCommand(s_Claaawww, ClawState.TRANSPORT));
+        // lowButton.onTrue(new ClawCommand(s_Claaawww, ClawState.LOW));
+        // highButton.onTrue(new ClawCommand(s_Claaawww, ClawState.HIGH));
+        // loadingButton.onTrue(new ClawCommand(s_Claaawww, ClawState.LOADING));
+        // mediumButton.onTrue(new ClawCommand(s_Claaawww, ClawState.MEDIUM));
+        // leftBumper.onTrue(new ClawCommand(s_Claaawww, ClawState.TRANSPORT));
 
-        //s_Claaawww.setState(ClawState.LOADING);
+        // //s_Claaawww.setState(ClawState.LOADING);
 
-        rightBumper.whileTrue(new RunCommand(() -> s_Claaawww.drive(-m_Operator.getRightY(), m_Operator.getLeftY()), s_Claaawww));
-        rightBumper.onFalse(new RunCommand(() -> s_Claaawww.drive(0, 0), s_Claaawww));
+        // rightBumper.whileTrue(new RunCommand(() -> s_Claaawww.drive(-m_Operator.getRightY(), m_Operator.getLeftY()), s_Claaawww));
+        // rightBumper.onFalse(new RunCommand(() -> s_Claaawww.drive(0, 0), s_Claaawww));
         //Set arm speed to FF*cos(getArmAngle)
         //e.g. .05*sin(0) = 0
         //e.g. .05sin(90) = .05
