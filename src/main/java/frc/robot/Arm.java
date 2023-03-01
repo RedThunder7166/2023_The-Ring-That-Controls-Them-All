@@ -111,4 +111,8 @@ public class Arm {
     public double getRawEncoderUnits(){
         return m_armMotorLeft.getSelectedSensorPosition();
     }
+
+    public void stop(){
+        m_armMotorLeft.set(0);
+    }
 }

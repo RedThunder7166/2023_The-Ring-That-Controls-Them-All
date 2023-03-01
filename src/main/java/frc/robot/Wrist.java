@@ -9,6 +9,7 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.util.ClawUtils;
 import frc.robot.Constants.Clawstants;
@@ -19,6 +20,8 @@ public class Wrist {
     private double wristAngleInDegrees = 0;
     private CANCoder wristAbsolute;
     private static Wrist singleton;
+    private DigitalInput positiveSwitch = new DigitalInput(2);
+    private DigitalInput negativeSwitch = new DigitalInput(1);
 
 
 
@@ -41,7 +44,7 @@ public class Wrist {
         wristAbsolute.configSensorDirection(true);
         wristAbsolute.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
         wristAbsolute.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
-        wristAbsolute.configMagnetOffset(0); 
+        wristAbsolute.configMagnetOffset(108); 
 
         m_wristMotor.configMotionAcceleration(6000);
         m_wristMotor.configMotionCruiseVelocity(7500);
@@ -58,6 +61,13 @@ public class Wrist {
         
         return singleton;
         
+    }
+
+    public boolean isPositiveSwitchPressed() {
+        return !positiveSwitch.get();
+    }
+    public boolean isNegativeSwitchPressed() {
+        return !negativeSwitch.get();
     }
 
     public void driveWrist(double speed){
@@ -81,6 +91,13 @@ public class Wrist {
         //    } else {
         //      m_wristMotor.set(maxSpeed * speed);
         //      }
+
+        if (isPositiveSwitchPressed() && speed > 0) {
+            speed = 0;
+        } else if (isNegativeSwitchPressed() && speed < 0) {
+            speed = 0;
+        }
+
       m_wristMotor.set(speed);
     }
 
@@ -111,11 +128,16 @@ public class Wrist {
         return wristAbsolute.getAbsolutePosition();
     }
 
-    public void drive(double speed){
-        m_wristMotor.set(speed);
-    }
-
     public void syncEncoders(){
         m_wristMotor.setSelectedSensorPosition(ClawUtils.degreesToEncoderUnits(wristAbsolute.getAbsolutePosition(), 100));
     }
+
+    public void stop(){
+        m_wristMotor.set(0);
+    }
+
 }
+
+
+
+

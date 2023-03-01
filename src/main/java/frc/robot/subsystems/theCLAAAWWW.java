@@ -51,7 +51,7 @@ public class theCLAAAWWW extends SubsystemBase {
     // if(clawState != clawState.LOADING && clawState != clawState.TRANSPORT){
     //   //System.out.println("getState: " + clawState.name());
     clawState = getState();
-    // }
+    // }y
     
     SmartDashboard.putString("ClawState", clawState.name());
 
@@ -94,7 +94,7 @@ private void toggleCube(){
 
 public void drive(double speed, double wristSpeed){
   arm.drive(speed * 0.25);
-  wrist.drive(wristSpeed * 0.25);
+  wrist.driveWrist(wristSpeed * 0.25);
 
 }
 
@@ -105,6 +105,20 @@ public void setArmAngle(double armAngle){
 
 public void setWristAngle(double wristAngle){
   wrist.setAngle(wristAngle);
+}
+ 
+public void stopWrist() {
+  wrist.stop();
+}
+public void stopArm() {
+  arm.stop();
+}
+
+public boolean areWristSwitchesPressed(){
+  return wrist.isNegativeSwitchPressed() || wrist.isPositiveSwitchPressed();
+}
+public boolean isArmSwitchPressed(){
+  return arm.isArmSwitchPressed();
 }
 
 public double getWristAngle(){

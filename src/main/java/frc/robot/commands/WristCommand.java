@@ -58,13 +58,17 @@ public class WristCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     byeFelicia = !byeFelicia;
-    clawSubsystem.setWristAngle(targetAngle);
+    // clawSubsystem.setWristAngle(targetAngle);
+    clawSubsystem.stopWrist();
 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (clawSubsystem.areWristSwitchesPressed()) {
+      return true;
+    }
     return byeFelicia;
   }
 }

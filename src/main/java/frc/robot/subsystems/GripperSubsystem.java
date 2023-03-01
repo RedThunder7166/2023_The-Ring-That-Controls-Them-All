@@ -20,7 +20,7 @@ public class GripperSubsystem extends SubsystemBase {
   public GripperSubsystem() {
     gripperAbsolute.configFactoryDefault();
     gripperAbsolute.configSensorInitializationStrategy(SensorInitializationStrategy.BootToZero);
-    gripperAbsolute.configMagnetOffset(-121.734); // WARNING: DO NOT CHANGE THIS UNLESS ENCODER HAS BEEN REMOVED AND PUT BACK ON
+    gripperAbsolute.configMagnetOffset(-120); // WARNING: DO NOT CHANGE THIS UNLESS ENCODER HAS BEEN REMOVED AND PUT BACK ON
 
   }// This value sets zero to ~2 degrees 
 
@@ -31,7 +31,7 @@ public class GripperSubsystem extends SubsystemBase {
 // Negative value = open
 public void driveGripper(double speed){
   double maxSpeed = 1;
-  double maxClosed = 5;
+  double maxClosed = 6;
   double maxOpen = 350;
   double position = gripperAbsolute.getAbsolutePosition();
   boolean isMaxClosed = gripperAbsolute.getAbsolutePosition() <= maxClosed;
@@ -45,11 +45,11 @@ public void driveGripper(double speed){
   
 
    if(isMaxClosed && gripperClosing){
-     gripperMotor.set(0);
+     speed = 0;
    } else if(isMaxOpen && gripperOpening){
-     gripperMotor.set(0);
+     speed = 0;
      } else {
-       gripperMotor.set(maxSpeed * speed);
+      speed = maxSpeed * speed;
        }
 
    gripperMotor.set(speed);
@@ -59,6 +59,7 @@ public void driveGripper(double speed){
   SmartDashboard.putBoolean("isMaxClosed", isMaxClosed);
   SmartDashboard.putBoolean("isMaxOpen", isMaxOpen);
   SmartDashboard.putNumber("Gripper Absolute", gripperAbsolute.getAbsolutePosition());
+  SmartDashboard.putNumber("Speed", speed);
 
   };
 

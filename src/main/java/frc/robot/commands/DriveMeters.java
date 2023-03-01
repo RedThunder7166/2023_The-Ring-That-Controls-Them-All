@@ -72,7 +72,7 @@ public class DriveMeters extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (x_error <= 0.1 && y_error <= 0.1 && rot_error <= Math.toRadians(1)) {
+    if (Math.abs(x_error) <= 0.1 && Math.abs(y_error) <= 0.1 && Math.abs(rot_error) <= Math.toRadians(1)) {
       return true;
     }
     return false;
