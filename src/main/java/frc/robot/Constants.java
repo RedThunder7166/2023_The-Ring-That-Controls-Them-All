@@ -175,12 +175,9 @@ public final class Constants {
         
     }
 
-    public static final class PneumaticsConstants { // TODO: change pnuematic ports
-        public static final int PneumaticsHubID = 20;
-        public static final int ClawSolenoidID = 0;
-    }
+
     
-    public static final class Clawstants { // TODO: change claw ports
+    public static final class Clawstants { // Remember the Clawstants
         public static final int ClawMotorWristID = 28;
         public static final int ClawMotorLeftID = 26;
         public static final int ClawMotorRightID = 25;

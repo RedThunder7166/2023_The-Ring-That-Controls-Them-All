@@ -10,12 +10,15 @@ import com.ctre.phoenix.sensors.SensorInitializationStrategy;
 import edu.wpi.first.wpilibj.motorcontrol.PWMVictorSPX;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Clawstants;
 
 public class GripperSubsystem extends SubsystemBase {
   /** Creates a new GripperSubsystem. */
   CANCoder gripperAbsolute = new CANCoder(Clawstants.ClawEncoder);
+  boolean limited = true;
+
 
   public GripperSubsystem() {
     gripperAbsolute.configFactoryDefault();
@@ -32,7 +35,7 @@ public class GripperSubsystem extends SubsystemBase {
 public void driveGripper(double speed){
   double maxSpeed = 1;
   double maxClosed = 6;
-  double maxOpen = 350;
+  double maxOpen = 345;
   double position = gripperAbsolute.getAbsolutePosition();
   boolean isMaxClosed = gripperAbsolute.getAbsolutePosition() <= maxClosed;
   boolean isMaxOpen = gripperAbsolute.getAbsolutePosition() >= maxOpen;
@@ -44,14 +47,17 @@ public void driveGripper(double speed){
   //loops back around to zero and breaks the follow logic
   
 
-   if(isMaxClosed && gripperClosing){
-     speed = 0;
-   } else if(isMaxOpen && gripperOpening){
-     speed = 0;
-     } else {
-      speed = maxSpeed * speed;
-       }
-
+  if(limited){
+    if(isMaxClosed && gripperClosing){
+      speed = 0;
+    } else if(isMaxOpen && gripperOpening){
+      speed = 0;
+      } else {
+        speed = maxSpeed * speed;
+        }
+      } else {
+        gripperMotor.set(speed);
+      }
    gripperMotor.set(speed);
 
   SmartDashboard.putBoolean("gripperClosing", gripperClosing);
@@ -63,8 +69,18 @@ public void driveGripper(double speed){
 
   };
 
+
+  public CommandBase toggleLimitedControl() {
+		return runOnce(() -> {
+			limited = !limited;
+		});
+	}
+  
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Limited Gripper?", limited);
+
   }
 }

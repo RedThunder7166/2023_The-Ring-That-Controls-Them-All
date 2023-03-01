@@ -65,6 +65,7 @@ public class RobotContainer {
     private final JoystickButton highButton = new JoystickButton(m_Operator, XboxController.Button.kY.value);
     private final JoystickButton rightBumper = new JoystickButton(m_Operator, XboxController.Button.kRightBumper.value);
     private final JoystickButton leftBumper = new JoystickButton(m_Operator, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton back = new JoystickButton(m_Operator, XboxController.Button.kBack.value);
 
  //   private final JoystickButton nodeOne = new JoystickButton(operator, 1);
    // private final JoystickButton nodeTwo = new JoystickButton(operator, 2);
@@ -148,9 +149,11 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro())
+        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        back.onTrue(s_GripperSubsystem.toggleLimitedControl());
         
-        );
+        
+        
         
         // lowButton.onTrue(new ClawCommand(s_Claaawww, ClawState.LOW));
         // highButton.onTrue(new ClawCommand(s_Claaawww, ClawState.HIGH));
