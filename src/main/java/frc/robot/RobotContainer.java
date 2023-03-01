@@ -56,7 +56,8 @@ public class RobotContainer {
     private final JoystickButton wristLeft = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton wristRight = new JoystickButton(driver, XboxController.Button.kY.value);
 
-    private final SendableChooser<PathPlannerTrajectory> autoChooser = new SendableChooser<>();
+    // private final SendableChooser<PathPlannerTrajectory> autoChooser = new SendableChooser<>();
+    private final SendableChooser<SequentialCommandGroup> autoChooser = new SendableChooser<>();
 
     /* operator Buttons */
     private final JoystickButton loadingButton = new JoystickButton(m_Operator, XboxController.Button.kX.value);
@@ -66,19 +67,6 @@ public class RobotContainer {
     private final JoystickButton rightBumper = new JoystickButton(m_Operator, XboxController.Button.kRightBumper.value);
     private final JoystickButton leftBumper = new JoystickButton(m_Operator, XboxController.Button.kLeftBumper.value);
     private final JoystickButton back = new JoystickButton(m_Operator, XboxController.Button.kBack.value);
-
- //   private final JoystickButton nodeOne = new JoystickButton(operator, 1);
-   // private final JoystickButton nodeTwo = new JoystickButton(operator, 2);
-    //   private final JoystickButton wristUpButton = new JoystickButton(operator, 1);
-    //   private final JoystickButton wristDownButton = new JoystickButton(operator, 2);
-    //   private final JoystickButton armUpButton = new JoystickButton(operator, 4);
-    //   private final JoystickButton armDownButton = new JoystickButton(operator, 5);
-    //   private final JoystickButton gripperCloseCone = new JoystickButton(operator, 0);
-    //   private final JoystickButton gripperCloseCube = new JoystickButton(operator, 0);
-    //   private final JoystickButton gripperOpen = new JoystickButton(operator, 0);
-    //   private final JoystickButton EMERGENCYSTOP = new JoystickButton(operator, 0);
-
-
 
 
     /* Subsystems */
@@ -92,7 +80,6 @@ public class RobotContainer {
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
     public RobotContainer() {
-
         Shuffleboard.getTab("Autonomous").add(autoChooser);
 
         s_Swerve.setDefaultCommand(
@@ -102,25 +89,29 @@ public class RobotContainer {
                         () -> Math.pow(-driver.getRawAxis(strafeAxis), 3),
                         () -> -driver.getRawAxis(rotationAxis),
                         () -> robotCentric.getAsBoolean()));
-
+                        
         s_GripperSubsystem.setDefaultCommand(
-                new RunCommand(
-                        () -> s_GripperSubsystem
+            new RunCommand(
+                () -> s_GripperSubsystem
                                 .driveGripper(m_Operator.getRightTriggerAxis() - m_Operator.getLeftTriggerAxis()),
-                        s_GripperSubsystem));
+                                s_GripperSubsystem));
 
         // s_wrist.setDefaultCommand(
-        //         new RunCommand(
+            //         new RunCommand(
         //                 () -> s_wrist.driveWrist(m_Operator.getLeftY()),
         //                 s_wrist)
         // );
 
         s_Claaawww.setDefaultCommand(new RunCommand(() -> s_Claaawww.drive(-m_Operator.getRightY(), m_Operator.getLeftY()), s_Claaawww));
 
-        PathPlannerTrajectory thingTraj = PathPlanner.loadPath("thing", new PathConstraints(3, 5));
+        // PathPlannerTrajectory thingTraj = PathPlanner.loadPath("thing", new PathConstraints(3, 5));
 
-        autoChooser.setDefaultOption("Thing", thingTraj); //TODO: Change default auto
-        autoChooser.addOption("Thing", thingTraj);
+        // autoChooser.setDefaultOption("Thing", thingTraj); //TODO: Change default auto
+        // autoChooser.addOption("Thing", thingTraj);
+
+        placeDriveAuto m_placeDriveAuto = new placeDriveAuto(s_Swerve, s_Claaawww);
+        autoChooser.setDefaultOption("Place Drive", m_placeDriveAuto);
+        autoChooser.addOption("")
 
         // Configure the button bindings
 
@@ -151,8 +142,7 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         back.onTrue(s_GripperSubsystem.toggleLimitedControl());
-        
-        
+
         
         
         // lowButton.onTrue(new ClawCommand(s_Claaawww, ClawState.LOW));
@@ -172,42 +162,6 @@ public class RobotContainer {
         // clawToggle.onTrue(new InstantCommand(() ->
         // s_PneumaticsHub.toggleClawSolenoid()));
 
-        // when up button is pressed, start moving claw up
-        // when down button is pressed, start moving the claw down
-        // armUp.onTrue(new InstantCommand(() -> s_Claaawww.armUp()));
-        // armDown.onTrue(new InstantCommand(() -> s_Claaawww.armDown()));
-        // wristLeft.onTrue(new InstantCommand(() -> s_Claaawww.wristLeft()));
-        // wristRight.onTrue(new InstantCommand(() -> s_Claaawww.wristRight()));
-
-        // when up or down button is unpressed, stop moving the claw
-        // when stop button is pressed, stop moving the claw
-        // armUp.onFalse(new InstantCommand(() -> s_Claaawww.armStop()));
-        // armDown.onFalse(new InstantCommand(() -> s_Claaawww.armStop()));
-        // armOffset.onTrue(new InstantCommand(() -> s_Claaawww.setArmOffsets()));
-        // wristLeft.onFalse(new InstantCommand(() -> s_Claaawww.wristStop()));
-        // wristRight.onFalse(new InstantCommand(() -> s_Claaawww.wristStop()));
-
-        /* operator Buttons */
-
-        // nodeOne.onTrue(new InstantCommand(() ->
-        // s_Claaawww.setClawstate(ClawState.LOADING)));
-        // nodeOne.onTrue(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne",
-        // true)));
-        // nodeOne.onFalse(new InstantCommand(() -> SmartDashboard.putBoolean("nodeOne",
-        // false)));
-
-        // wristUpButton.onTrue(new InstantCommand(() -> s_wrist.driveWrist(0.1)));
-        // wristUpButton.onFalse(new InstantCommand(() -> s_wrist.driveWrist(0)));
-
-        // wristDownButton.onTrue(new InstantCommand(() -> s_wrist.driveWrist(-0.1)));
-        // wristDownButton.onFalse(new InstantCommand(() -> s_wrist.driveWrist(0)));
-
-        // armUpButton.onTrue(new InstantCommand(() -> s_Claaawww.drive(0.1)));
-        // armUpButton.onFalse(new InstantCommand(() -> s_Claaawww.drive(0)));
-
-        // armDownButton.onTrue(new InstantCommand(() -> s_Claaawww.drive(-0.1)));
-        // armDownButton.onFalse(new InstantCommand(() -> s_Claaawww.drive(0)));
-
     }
 
     /**
@@ -219,6 +173,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         // return s_Swerve.followTrajectoryCommand(autoChooser.getSelected(), true);
-        return new autoCommandGroup(s_Swerve, s_Claaawww);
+        // return new autoCommandGroup(s_Swerve, s_Claaawww);
+        return autoChooser.getSelected();
     }
 }

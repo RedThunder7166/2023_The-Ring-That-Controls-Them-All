@@ -21,10 +21,10 @@ import frc.robot.subsystems.theCLAAAWWW;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class autoCommandGroup extends SequentialCommandGroup {
+public class placeDriveAuto extends SequentialCommandGroup {
   /** Creates a new autoCommandGroup. */
 
-  public autoCommandGroup(Swerve s_Swerve, theCLAAAWWW clawSubsystem) {
+  public placeDriveAuto(Swerve s_Swerve, theCLAAAWWW clawSubsystem) {
 
     addCommands(
       // move backwards

@@ -32,7 +32,7 @@ public class GripperSubsystem extends SubsystemBase {
 
 // Postive value = close
 // Negative value = open
-public void driveGripper(double speed){
+public void driveGripper(double speed) {
   double maxSpeed = 1;
   double maxClosed = 6;
   double maxOpen = 345;
@@ -67,7 +67,11 @@ public void driveGripper(double speed){
   SmartDashboard.putNumber("Gripper Absolute", gripperAbsolute.getAbsolutePosition());
   SmartDashboard.putNumber("Speed", speed);
 
-  };
+};
+
+  public double getPosition(){
+    return gripperAbsolute.getAbsolutePosition();
+  }
 
 
   public CommandBase toggleLimitedControl() {
