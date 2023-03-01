@@ -29,7 +29,7 @@ public class GripperSubsystem extends SubsystemBase {
 
 // Postive value = close
 // Negative value = open
-public void driveGripper(double speed){
+public void driveGripper(double speed) {
   double maxSpeed = 1;
   double maxClosed = 6;
   double maxOpen = 350;
@@ -38,21 +38,20 @@ public void driveGripper(double speed){
   boolean isMaxOpen = gripperAbsolute.getAbsolutePosition() >= maxOpen;
   boolean gripperClosing = speed > 0;
   boolean gripperOpening = speed < 0;
-  //WARNING: Gripper continues traveling 15-30 degrees past
-  //max and min position.  Zero is set to where the gripper CANNOT
-  //close anymore.  Max is set to 330 so it does not go past 360 which
-  //loops back around to zero and breaks the follow logic
-  
+  // WARNING: Gripper continues traveling 15-30 degrees past
+  // max and min position. Zero is set to where the gripper CANNOT
+  // close anymore. Max is set to 330 so it does not go past 360 which
+  // loops back around to zero and breaks the follow logic
 
-   if(isMaxClosed && gripperClosing){
-     speed = 0;
-   } else if(isMaxOpen && gripperOpening){
-     speed = 0;
-     } else {
-      speed = maxSpeed * speed;
-       }
+  if (isMaxClosed && gripperClosing) {
+    speed = 0;
+  } else if (isMaxOpen && gripperOpening) {
+    speed = 0;
+  } else {
+    speed = maxSpeed * speed;
+  }
 
-   gripperMotor.set(speed);
+  gripperMotor.set(speed);
 
   SmartDashboard.putBoolean("gripperClosing", gripperClosing);
   SmartDashboard.putBoolean("gripperOpening", gripperOpening);
@@ -61,7 +60,11 @@ public void driveGripper(double speed){
   SmartDashboard.putNumber("Gripper Absolute", gripperAbsolute.getAbsolutePosition());
   SmartDashboard.putNumber("Speed", speed);
 
-  };
+};
+
+  public double getPosition(){
+    return gripperAbsolute.getAbsolutePosition();
+  }
 
   @Override
   public void periodic() {
