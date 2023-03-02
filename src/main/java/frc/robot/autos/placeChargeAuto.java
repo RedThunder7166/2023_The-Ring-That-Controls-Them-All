@@ -29,8 +29,8 @@ public class placeChargeAuto extends SequentialCommandGroup {
       new DriveMeters(s_Swerve, -1, 0, 0),
       // move the wrist to loading
       new WristCommand(s_Claaawww, Clawstants.wristLoading),
-      // gripper grab the piece
-      new GripperCommand(s_Gripper, Clawstants.closedCube),
+      // gripper grab the piece (commented out because it should already be gripped)
+      // new GripperCommand(s_Gripper, Clawstants.closedCube),
       // move the wrist to grabbed
       new WristCommand(s_Claaawww, Clawstants.wristGrabbed),
       // move the arm to medium
@@ -38,7 +38,7 @@ public class placeChargeAuto extends SequentialCommandGroup {
       // move the wrist to high
       new WristCommand(s_Claaawww, Clawstants.wristMedium),
       // gripper lets go of piece
-
+      new GripperCommand(s_Gripper, Clawstants.openAll),
 
       // move the wrist to loading
       new WristCommand(s_Claaawww, Clawstants.wristLoading),

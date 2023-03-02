@@ -15,7 +15,9 @@ import frc.robot.Constants;
 import frc.robot.Constants.Clawstants;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.DriveMeters;
+import frc.robot.commands.GripperCommand;
 import frc.robot.commands.WristCommand;
+import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.theCLAAAWWW;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -24,15 +26,17 @@ import frc.robot.subsystems.theCLAAAWWW;
 public class placeDriveAuto extends SequentialCommandGroup {
   /** Creates a new autoCommandGroup. */
 
-  public placeDriveAuto(Swerve s_Swerve, theCLAAAWWW clawSubsystem) {
+  public placeDriveAuto(Swerve s_Swerve, theCLAAAWWW clawSubsystem, GripperSubsystem s_Gripper) {
 
     addCommands(
       // move backwards
       // new InstantCommand(() -> s_Swerve.drive(
       //   new Translation2d(-1, 0), 0, true, true), s_Swerve),
       new DriveMeters(s_Swerve, -1, 0, 0),
+
+      // do not do the below code because we already are gripping a piece
       // move the wrist to loading
-      new WristCommand(clawSubsystem, Clawstants.wristLoading),
+      // new WristCommand(clawSubsystem, Clawstants.wristLoading),
       // gripper grab the piece
 
       // move the wrist to grabbed
@@ -50,7 +54,7 @@ public class placeDriveAuto extends SequentialCommandGroup {
       //   new Translation2d(1, -0), 0, true, true), s_Swerve),
       new DriveMeters(s_Swerve, 1, 0, 0),
       // gripper lets go of piece
-
+      new GripperCommand(s_Gripper, Clawstants.openAll),
       // move backwards
       // new InstantCommand(() -> s_Swerve.drive(
       //   new Translation2d(-1, 0), 0, true, true), s_Swerve),

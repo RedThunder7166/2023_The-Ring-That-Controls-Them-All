@@ -49,7 +49,7 @@ public class DriveMeters extends CommandBase {
     System.out.println(rot_error);
 
     double x_kP = 4;
-    double y_kP = 0.1;
+    double y_kP = 4;
     double rot_kP = 0.1;
 
     double x = x_kP * x_error;

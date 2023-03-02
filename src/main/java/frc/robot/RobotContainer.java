@@ -109,9 +109,9 @@ public class RobotContainer {
         // autoChooser.setDefaultOption("Thing", thingTraj); //TODO: Change default auto
         // autoChooser.addOption("Thing", thingTraj);
 
-        placeDriveAuto m_placeDriveAuto = new placeDriveAuto(s_Swerve, s_Claaawww);
+        placeDriveAuto m_placeDriveAuto = new placeDriveAuto(s_Swerve, s_Claaawww, s_GripperSubsystem);
         //autoChooser.setDefaultOption("Place Drive", m_placeDriveAuto);
-        autoChooser.addOption("Test Auto", new TestAuto(s_Swerve, s_Claaawww));
+        autoChooser.addOption("Test Auto", new TestAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
 
         // Configure the button bindings
 

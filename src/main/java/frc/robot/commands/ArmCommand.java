@@ -57,9 +57,9 @@ public class ArmCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (clawSubsystem.isArmSwitchPressed()) {
-      return true;
-    }
+    //if (clawSubsystem.isArmSwitchPressed()) {
+    //  return true;
+    //}
     return byeFelicia;
   }
 }

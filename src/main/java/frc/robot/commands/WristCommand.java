@@ -4,9 +4,6 @@
 
 package frc.robot.commands;
 
-import java.sql.Time;
-
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.theCLAAAWWW;
 
@@ -15,6 +12,7 @@ public class WristCommand extends CommandBase {
   private double targetAngle;
   private double initialAngle;
   private boolean byeFelicia = false;
+  private double currentAngle;
   
   /** Creates a new WristCommand. */
   public WristCommand(theCLAAAWWW clawSubsystem, double angle) {
@@ -48,16 +46,14 @@ public class WristCommand extends CommandBase {
     //     byeFelicia = !byeFelicia;
     //   }
 
-    if((Math.abs(clawSubsystem.getWristAngle() - targetAngle) < 2)){
-      byeFelicia = !byeFelicia;
-    }
+    currentAngle = clawSubsystem.getWristAngle();
+    
     //System.out.println("END EXECUTE METHOD");
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    byeFelicia = !byeFelicia;
     // clawSubsystem.setWristAngle(targetAngle);
     clawSubsystem.stopWrist();
 
@@ -69,6 +65,10 @@ public class WristCommand extends CommandBase {
     if (clawSubsystem.areWristSwitchesPressed()) {
       return true;
     }
-    return byeFelicia;
+    
+    if((Math.abs(currentAngle - targetAngle) < 2)){
+      return true;
+    }
+    return false;
   }
 }

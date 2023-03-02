@@ -4,68 +4,69 @@
 
 package frc.robot.commands;
 
-import java.sql.Time;
-
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.lib.util.ClawUtils;
 import frc.robot.subsystems.GripperSubsystem;
 
 public class GripperCommand extends CommandBase {
-  private GripperSubsystem GripperSubsystem;
-  private double targetAngle;
-  private double initialAngle;
-  private boolean helloFelicia = false;
+  /** Creates a new GripperCommand. */
+  private final GripperSubsystem m_GripperSubsystem;
+  private double targetValue;
+  private boolean isClosing;
+  private double currPos;
 
-  /** Creates a new WristCommand. */
-  public GripperCommand(GripperSubsystem GripperSubsystem, double angle) {
+  public GripperCommand(GripperSubsystem gripperSub, double target) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.GripperSubsystem = GripperSubsystem;
-    targetAngle = angle;
-    addRequirements(GripperSubsystem);
-  }
+    addRequirements(gripperSub);
+    m_GripperSubsystem = gripperSub;
+    targetValue = target;
 
+    currPos = m_GripperSubsystem.getPosition();
+    
+
+    if (currPos <= targetValue) {
+      isClosing = false;
+    }else{
+      isClosing = true;
+    }
+
+  }
+  
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    double direction = 0.9;
+    if (isClosing) {
+      direction = -0.9;
+    }
+    m_GripperSubsystem.driveGripper(direction);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // System.out.println("BEGIN EXECUTE METHOD");
-    // if (initialAngle < targetAngle){
-    // System.out.println("" + initialAngle + " is less than " + targetAngle);
-    // if(clawSubsystem.getWristAngle() > targetAngle){
-    // System.out.println("" + clawSubsystem.getWristAngle() + " is greater than " +
-    // targetAngle);
-    // byeFelicia = !byeFelicia;
-    // }
-    // }else{
-    // if(clawSubsystem.getWristAngle() < targetAngle){
-    // System.out.println("" + clawSubsystem.getWristAngle() + " is less than " +
-    // targetAngle);
-    // byeFelicia = !byeFelicia;
-    // }
-
-    // if((Math.abs(.getGripperAngle() - targetAngle) < 2)){
-    helloFelicia = !helloFelicia;
-    // }
-    // System.out.println("END EXECUTE METHOD");
+    currPos = m_GripperSubsystem.getPosition();
+    SmartDashboard.putNumber("Gripper position", currPos);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    helloFelicia = !helloFelicia;
-    // GripperSubsystem.setWristAngle(targetAngle);
-
+    m_GripperSubsystem.driveGripper(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return helloFelicia;
+    if (isClosing) {
+      if (currPos <= targetValue) {
+        return true;
+      }
+    } else {
+      if (currPos >= targetValue) {
+        return true;
+      }
+    }
+    return false;
   }
 }
