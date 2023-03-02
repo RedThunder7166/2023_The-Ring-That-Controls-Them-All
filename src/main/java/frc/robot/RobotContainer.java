@@ -112,6 +112,8 @@ public class RobotContainer {
         placeDriveAuto m_placeDriveAuto = new placeDriveAuto(s_Swerve, s_Claaawww, s_GripperSubsystem);
         //autoChooser.setDefaultOption("Place Drive", m_placeDriveAuto);
         autoChooser.addOption("Test Auto", new TestAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
+        autoChooser.addOption("CenterChargingStation", new CenterChargingStation(s_Swerve));
+        autoChooser.addOption("RightChargingStation", new RightChargingStation(s_Swerve));
 
         // Configure the button bindings
 

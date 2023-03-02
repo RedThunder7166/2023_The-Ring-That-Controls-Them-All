@@ -44,9 +44,9 @@ public class DriveMeters extends CommandBase {
     x_error = targetMetersX - currentPose.getX();
     y_error = targetMetersY - currentPose.getY();
     rot_error = targetRotation - currentPose.getRotation().getRadians();
-    System.out.println(x_error);
-    System.out.println(y_error);
-    System.out.println(rot_error);
+    // System.out.println(x_error);
+    // System.out.println(y_error);
+    // System.out.println(rot_error);
 
     double x_kP = 4;
     double y_kP = 4;
