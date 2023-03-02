@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
 
@@ -20,7 +21,7 @@ public class DriveMeters extends CommandBase {
   private double x_error;
   private double y_error;
   private double rot_error;
-
+  private double feedForward = .1;
   public DriveMeters(Swerve swerve, double targetX, double targetY, double targetRot) {
     s_Swerve = swerve;
     targetMetersX = targetX;
@@ -33,7 +34,7 @@ public class DriveMeters extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //s_Swerve.resetOdometry(new Pose2d(0,0, s_Swerve.getYaw()));
+    s_Swerve.resetOdometry(new Pose2d(0,0, s_Swerve.getYaw()));
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,8 +44,11 @@ public class DriveMeters extends CommandBase {
     x_error = targetMetersX - currentPose.getX();
     y_error = targetMetersY - currentPose.getY();
     rot_error = targetRotation - currentPose.getRotation().getRadians();
+    System.out.println(x_error);
+    System.out.println(y_error);
+    System.out.println(rot_error);
 
-    double x_kP = 0.1;
+    double x_kP = 4;
     double y_kP = 0.1;
     double rot_kP = 0.1;
 
@@ -56,7 +60,7 @@ public class DriveMeters extends CommandBase {
         new Translation2d(x, y),
         rot,
         true,
-        true);
+        false);
   }
 
   // Called once the command ends or is interrupted.
@@ -65,8 +69,8 @@ public class DriveMeters extends CommandBase {
     s_Swerve.drive(
         new Translation2d(0, 0),
         0,
-        false,
-        true);
+        true,
+        false);
   }
 
   // Returns true when the command should end.

@@ -93,6 +93,7 @@ private void toggleCube(){
 }
 
 public void drive(double speed, double wristSpeed){
+//  System.out.println( 0.1* (speed + Math.sin(arm.getAngle())) );
   arm.drive(speed * 0.25);
   wrist.driveWrist(wristSpeed * 0.25);
 
