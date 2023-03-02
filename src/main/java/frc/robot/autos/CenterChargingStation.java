@@ -38,7 +38,6 @@ public class CenterChargingStation extends SequentialCommandGroup {
       // new PrintCommand("Ending Auto"),
       // new DriveMeters(s_Swerve, 1, 0, 0)
 
-      new PrintCommand("Starting ChargingAuto"),
       new DriveMeters(s_Swerve, -5.5, 0, 0),
       new DriveMeters(s_Swerve, 2.5, 0, 0),
       new DriveMeters(s_Swerve, 0, 0 , .01)//used to turn the wheels in preperation for slipping

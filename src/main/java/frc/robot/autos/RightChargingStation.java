@@ -39,10 +39,10 @@ public class RightChargingStation extends SequentialCommandGroup {
       // new DriveMeters(s_Swerve, 1, 0, 0)
 
       new PrintCommand("Starting ChargingAuto"),
-      new DriveMeters(s_Swerve, 4, 0, 0),
+      new DriveMeters(s_Swerve, -4, 0, 0),
       new PrintCommand("move right now"),
-      new DriveMeters(s_Swerve, 0, 1.5, 0),//i dont remember if POS or NEG is left or right so currently just recoginze that it needs to be changed
-      new DriveMeters(s_Swerve, -1.5, 0, 0),
+      new DriveMeters(s_Swerve, 0, -1.5, 0),//i dont remember if POS or NEG is left or right so currently just recoginze that it needs to be changed
+      new DriveMeters(s_Swerve, 1.5, 0, 0),
       new DriveMeters(s_Swerve, 0, 0 , .01)//used to turn the wheels in preperation for slipping
 
     );

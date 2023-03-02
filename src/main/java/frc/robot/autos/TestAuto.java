@@ -40,13 +40,13 @@ public class TestAuto extends SequentialCommandGroup {
       // new DriveMeters(s_Swerve, 1, 0, 0)
 
       new PrintCommand("Starting TestAuto"),
-      new CloseGripperCommand(s_Gripper, Clawstants.closedCube),
-      new ArmCommand(clawSubsystem, Clawstants.armMedium),
-      new WristCommand(clawSubsystem, Clawstants.wristHigh),
-      new OpenGripperCommand(s_Gripper, Clawstants.openAll),
+      // new CloseGripperCommand(s_Gripper, Clawstants.closedCube),
+      // new ArmCommand(clawSubsystem, Clawstants.armMedium),
+      // new WristCommand(clawSubsystem, Clawstants.wristHigh),
+      // new OpenGripperCommand(s_Gripper, Clawstants.openAll),
       
-      new WristCommand(clawSubsystem, Clawstants.wristLoading),
-      new ArmCommand(clawSubsystem, Clawstants.armLoading),
+      // new WristCommand(clawSubsystem, Clawstants.wristLoading),
+      // new ArmCommand(clawSubsystem, Clawstants.armLoading),
       new DriveMeters(s_Swerve, 0, -0.3, 0),
       new DriveMeters(s_Swerve, -5, 0, 0)
     );
