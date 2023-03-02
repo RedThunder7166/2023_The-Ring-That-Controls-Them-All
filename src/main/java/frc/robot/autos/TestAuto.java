@@ -15,8 +15,13 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.Constants.Clawstants;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.ClawCommand;
+import frc.robot.commands.CloseGripperCommand;
 import frc.robot.commands.DriveMeters;
+import frc.robot.commands.GripperCommand;
+import frc.robot.commands.OpenGripperCommand;
 import frc.robot.commands.WristCommand;
+import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.theCLAAAWWW;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -25,16 +30,25 @@ import frc.robot.subsystems.theCLAAAWWW;
 public class TestAuto extends SequentialCommandGroup {
   /** Creates a new autoCommandGroup. */
 
-  public TestAuto(Swerve s_Swerve, theCLAAAWWW clawSubsystem) {
+  public TestAuto(Swerve s_Swerve, theCLAAAWWW clawSubsystem, GripperSubsystem s_Gripper) {
 
     addCommands(
       // move backwards
-      // new InstantCommand(() -> s_Swerve.drive(
-      //   new Translation2d(-1, 0), 0, true, true), s_Swerve),
-      new PrintCommand("Starting Auto"),
-      new DriveMeters(s_Swerve, -1, 0, 0),
-      new PrintCommand("Ending Auto"),
-      new DriveMeters(s_Swerve, 1, 0, 0)
+      // new PrintCommand("Starting Auto"),
+      // new DriveMeters(s_Swerve, -1, 0, 0),
+      // new PrintCommand("Ending Auto"),
+      // new DriveMeters(s_Swerve, 1, 0, 0)
+
+      new PrintCommand("Starting TestAuto"),
+      new CloseGripperCommand(s_Gripper, Clawstants.closedCube),
+      new ArmCommand(clawSubsystem, Clawstants.armMedium),
+      new WristCommand(clawSubsystem, Clawstants.wristHigh),
+      new OpenGripperCommand(s_Gripper, Clawstants.openAll),
+      
+      new WristCommand(clawSubsystem, Clawstants.wristLoading),
+      new ArmCommand(clawSubsystem, Clawstants.armLoading),
+      new DriveMeters(s_Swerve, 0, -0.3, 0),
+      new DriveMeters(s_Swerve, -5, 0, 0)
     );
   }
 }

@@ -193,9 +193,9 @@ public final class Constants {
         public static final double armGearRatio = 144;
         public static final double wristGearRatio = 1;
 
-        public static final double closedCube = 0;//TODO update with correct encoder value
-        public static final double openAll = 0;
-        public static final double closedCone = 0;
+        public static final double closedCube = 219;//TODO update with correct encoder value
+        public static final double openAll = 340;
+        public static final double closedCone = 10;
 
         public static final double wristGrabbed = 345; // Values Changed 2/26 2:53PM WAS 326
         public static final double wristLoading = 335; 
