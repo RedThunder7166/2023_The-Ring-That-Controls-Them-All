@@ -141,7 +141,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        back.onTrue(s_GripperSubsystem.toggleLimitedControl());
+      //  back.onTrue(s_GripperSubsystem.toggleLimitedControl());
 
         
         

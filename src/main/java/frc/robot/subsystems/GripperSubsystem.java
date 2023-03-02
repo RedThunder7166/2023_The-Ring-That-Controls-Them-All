@@ -47,18 +47,18 @@ public void driveGripper(double speed) {
   //loops back around to zero and breaks the follow logic
   
 
-  if(limited){
-    if(isMaxClosed && gripperClosing){
-      speed = 0;
-    } else if(isMaxOpen && gripperOpening){
-      speed = 0;
-      } else {
-        speed = maxSpeed * speed;
-        }
-      } else {
-        gripperMotor.set(speed);
-      }
-   gripperMotor.set(speed);
+  // if(limited){
+  //   if(isMaxClosed && gripperClosing){
+  //     speed = 0;
+  //   } else if(isMaxOpen && gripperOpening){
+  //     speed = 0;
+  //     } else {
+  //       speed = maxSpeed * speed;
+  //       }
+  //     } else {
+  //       gripperMotor.set(speed);
+  //     }
+    gripperMotor.set(speed);
 
   SmartDashboard.putBoolean("gripperClosing", gripperClosing);
   SmartDashboard.putBoolean("gripperOpening", gripperOpening);
@@ -74,17 +74,17 @@ public void driveGripper(double speed) {
   }
 
 
-  public CommandBase toggleLimitedControl() {
-		return runOnce(() -> {
-			limited = !limited;
-		});
-	}
+  // public CommandBase toggleLimitedControl() {
+	// 	return runOnce(() -> {
+	// 		limited = !limited;
+		// });
+	
   
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Limited Gripper?", limited);
+  //   SmartDashboard.putBoolean("Limited Gripper?", limited);
 
-  }
+   }
 }

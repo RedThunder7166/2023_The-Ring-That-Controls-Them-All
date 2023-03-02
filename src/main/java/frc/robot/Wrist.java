@@ -44,7 +44,7 @@ public class Wrist {
         wristAbsolute.configSensorDirection(true);
         wristAbsolute.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
         wristAbsolute.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
-        wristAbsolute.configMagnetOffset(108); 
+        wristAbsolute.configMagnetOffset(136); 
 
         m_wristMotor.configMotionAcceleration(6000);
         m_wristMotor.configMotionCruiseVelocity(7500);
