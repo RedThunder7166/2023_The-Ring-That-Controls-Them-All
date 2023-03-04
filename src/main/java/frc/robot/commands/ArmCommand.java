@@ -11,7 +11,6 @@ public class ArmCommand extends CommandBase {
   private theCLAAAWWW clawSubsystem;
   private double targetAngle;
   private double initialAngle;
-  private boolean byeFelicia = false;
   
   /** Creates a new ArmCommand. */
   public ArmCommand(theCLAAAWWW clawSubsystem, double angle) {
@@ -41,17 +40,13 @@ public class ArmCommand extends CommandBase {
     //   }
 
     // }
-    if(Math.abs(clawSubsystem.getArmAngle() - targetAngle) < 2){
-      byeFelicia = !byeFelicia;
-    }
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    byeFelicia = !byeFelicia;
-    // clawSubsystem.setArmAngle(targetAngle);
-    clawSubsystem.stopArm();
+    // clawSubsystem.stopArm();
   }
 
   // Returns true when the command should end.
@@ -60,6 +55,10 @@ public class ArmCommand extends CommandBase {
     //if (clawSubsystem.isArmSwitchPressed()) {
     //  return true;
     //}
-    return byeFelicia;
+    double currentAngle = clawSubsystem.getArmAngle();
+    if(Math.abs(currentAngle - targetAngle) < 2){
+      return true;
+    }
+    return false;
   }
 }

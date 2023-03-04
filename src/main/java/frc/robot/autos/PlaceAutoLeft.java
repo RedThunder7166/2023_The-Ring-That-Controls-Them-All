@@ -21,33 +21,29 @@ import frc.robot.commands.DriveMeters;
 import frc.robot.commands.GripperCommand;
 import frc.robot.commands.OpenGripperCommand;
 import frc.robot.commands.WristCommand;
+import frc.robot.commands.YfeedBackwardAuto;
 import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.theCLAAAWWW;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TestAuto extends SequentialCommandGroup {
+public class PlaceAutoLeft extends SequentialCommandGroup {
   /** Creates a new autoCommandGroup. */
 
-  public TestAuto(Swerve s_Swerve, theCLAAAWWW clawSubsystem, GripperSubsystem s_Gripper) {
+  public PlaceAutoLeft(Swerve s_Swerve, theCLAAAWWW clawSubsystem, GripperSubsystem s_Gripper) {
 
     addCommands(
-      // move backwards
-      // new PrintCommand("Starting Auto"),
-      // new DriveMeters(s_Swerve, -1, 0, 0),
-      // new PrintCommand("Ending Auto"),
-      // new DriveMeters(s_Swerve, 1, 0, 0)
-
       new PrintCommand("Starting TestAuto"),
-      // new CloseGripperCommand(s_Gripper, Clawstants.closedCube),
-      // new ArmCommand(clawSubsystem, Clawstants.armMedium),
-      // new WristCommand(clawSubsystem, Clawstants.wristHigh),
-      // new OpenGripperCommand(s_Gripper, Clawstants.openAll),
+      new CloseGripperCommand(s_Gripper, Clawstants.closedCube),
+      new ArmCommand(clawSubsystem, Clawstants.armMedium),
+      new WristCommand(clawSubsystem, Clawstants.wristHigh),
+      new OpenGripperCommand(s_Gripper, Clawstants.openAll),
       
-      // new WristCommand(clawSubsystem, Clawstants.wristLoading),
-      // new ArmCommand(clawSubsystem, Clawstants.armLoading),
-      new DriveMeters(s_Swerve, 0, -0.3, 0),
+      new WristCommand(clawSubsystem, Clawstants.wristLoading),
+      new ArmCommand(clawSubsystem, Clawstants.armLoading),
+
+      new YfeedBackwardAuto(s_Swerve, 0, -0.3, 0),
       new DriveMeters(s_Swerve, -5, 0, 0)
     );
   }

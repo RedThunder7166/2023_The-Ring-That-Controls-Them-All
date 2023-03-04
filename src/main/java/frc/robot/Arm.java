@@ -86,6 +86,11 @@ public class Arm {
 
     }
 
+    public void holdAngle(){
+        double currentAngle = getAngle();
+        m_armMotorLeft.set(Math.sin(currentAngle) * 0.1);
+    }
+
     public void zeroEncoder() {
         m_armMotorLeft.setSelectedSensorPosition(0);
         // m_armMotorRight.setSelectedSensorPosition(0);

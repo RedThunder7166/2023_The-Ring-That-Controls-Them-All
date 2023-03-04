@@ -200,8 +200,8 @@ public final class Constants {
         public static final double openAll = 340;
         public static final double closedCone = 10;
 
-        public static final double wristGrabbed = 345; // Values Changed 2/26 2:53PM WAS 326
-        public static final double wristLoading = 335; 
+        public static final double wristGrabbed = 334; // Values Changed 2/26 2:53PM WAS 326
+        public static final double wristLoading = 320; 
         public static final double wristTransport = 76;
         public static final double wristLow = 151;
         public static final double wristMedium = 170;
@@ -210,7 +210,8 @@ public final class Constants {
         public static final double armLoading = 0;
         public static final double armTransport = 0;
         public static final double armLow = 11;
-        public static final double armMedium = 75;
+        public static final double armBetweenLowAndMedium = 44;
+        public static final double armMedium = 85; // this is fudged up.
         public static final double armHigh = 100;
         public static final double armTransition = 50;
 

@@ -85,6 +85,9 @@ private void toggleCone(){
 
 }
 
+public void holdArm(){
+  arm.holdAngle();
+}
 
 private void toggleCube(){
 

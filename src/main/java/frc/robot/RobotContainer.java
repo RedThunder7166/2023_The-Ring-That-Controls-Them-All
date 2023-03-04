@@ -111,9 +111,12 @@ public class RobotContainer {
 
         placeDriveAuto m_placeDriveAuto = new placeDriveAuto(s_Swerve, s_Claaawww, s_GripperSubsystem);
         //autoChooser.setDefaultOption("Place Drive", m_placeDriveAuto);
-        autoChooser.addOption("Test Auto", new TestAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
-        autoChooser.addOption("CenterChargingStation", new CenterChargingStation(s_Swerve));
+        autoChooser.addOption("PlaceAutoLeft", new PlaceAutoLeft(s_Swerve, s_Claaawww, s_GripperSubsystem));
         autoChooser.addOption("RightChargingStation", new RightChargingStation(s_Swerve));
+        autoChooser.addOption("DropCenterChargeAuto", new DropCenterChargeAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
+        autoChooser.addOption("PlaceAutoRight", new PlaceAutoRight(s_Swerve, s_Claaawww, s_GripperSubsystem));
+        autoChooser.addOption("LeftHighAuto", new LeftHighAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
+        autoChooser.addOption("RightHighAuto", new RightHighAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
 
         // Configure the button bindings
 
@@ -173,6 +176,7 @@ public class RobotContainer {
      * @return the command to run in autonomous
      */
     public Command getAutonomousCommand() {
+
         // An ExampleCommand will run in autonomous
         // return s_Swerve.followTrajectoryCommand(autoChooser.getSelected(), true);
         // return new autoCommandGroup(s_Swerve, s_Claaawww);

@@ -21,27 +21,29 @@ import frc.robot.commands.DriveMeters;
 import frc.robot.commands.GripperCommand;
 import frc.robot.commands.OpenGripperCommand;
 import frc.robot.commands.WristCommand;
+import frc.robot.commands.YfeedBackwardAuto;
 import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.theCLAAAWWW;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CenterChargingStation extends SequentialCommandGroup {
-  /** Creates a new ChargingStation. */
-  public CenterChargingStation(Swerve s_Swerve) {
-  
+public class RightHighAuto extends SequentialCommandGroup {
+  /** Creates a new autoCommandGroup. */
+
+  public RightHighAuto(Swerve s_Swerve, theCLAAAWWW clawSubsystem, GripperSubsystem s_Gripper) {
+
     addCommands(
-      // move backwards
-      // new PrintCommand("Starting Auto"),
-      // new DriveMeters(s_Swerve, -1, 0, 0),
-      // new PrintCommand("Ending Auto"),
-      // new DriveMeters(s_Swerve, 1, 0, 0)
-
-      new DriveMeters(s_Swerve, -5.5, 0, 0),
-      new DriveMeters(s_Swerve, 2.5, 0, 0),
-      new DriveMeters(s_Swerve, 0, 0 , .01)//used to turn the wheels in preperation for slipping
-
+      new PrintCommand("Starting LeftHighAuto"),
+      new CloseGripperCommand(s_Gripper, Clawstants.closedCube),
+      new ArmCommand(clawSubsystem, Clawstants.armHigh),
+      new WristCommand(clawSubsystem, Clawstants.wristHigh),
+      new DriveMeters(s_Swerve, .4, 0, 0),
+      new OpenGripperCommand(s_Gripper, Clawstants.openAll),
+      new DriveMeters(s_Swerve, -.4, 0, 0),
+      new ArmCommand(clawSubsystem, Clawstants.armLoading),
+      new YfeedBackwardAuto(s_Swerve, 0, 0.3, 0),
+      new DriveMeters(s_Swerve, -4, 0, 180)
     );
   }
 }
