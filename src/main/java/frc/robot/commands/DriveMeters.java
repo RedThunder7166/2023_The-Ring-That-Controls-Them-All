@@ -21,7 +21,7 @@ public class DriveMeters extends CommandBase {
   private double x_error;
   private double y_error;
   private double rot_error;
-  private double feedForward = .1;
+  private double feedforward = 1;
   public DriveMeters(Swerve swerve, double targetX, double targetY, double targetRot) {
     s_Swerve = swerve;
     targetMetersX = targetX;
@@ -34,6 +34,11 @@ public class DriveMeters extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //Dont know why this fixed t but it did
+    x_error = 0;
+    y_error = 0;
+    rot_error = 0;
+
     s_Swerve.resetOdometry(new Pose2d(0,0, s_Swerve.getYaw()));
   }
 
@@ -45,6 +50,7 @@ public class DriveMeters extends CommandBase {
     y_error = targetMetersY - currentPose.getY();
     rot_error = targetRotation - currentPose.getRotation().getRadians();
     // System.out.println(x_error);
+    
     // System.out.println(y_error);
     // System.out.println(rot_error);
 
@@ -52,10 +58,9 @@ public class DriveMeters extends CommandBase {
     double y_kP = 4;
     double rot_kP = 0.1;
 
-    double x = x_kP * x_error;
+    double x = x_kP * x_error ;
     double y = y_kP * y_error;
     double rot = rot_kP * rot_error;
-
     s_Swerve.drive(
         new Translation2d(x, y),
         rot,
@@ -76,7 +81,7 @@ public class DriveMeters extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Math.abs(x_error) <= 0.1 && Math.abs(y_error) <= 0.1 && Math.abs(rot_error) <= Math.toRadians(1)) {
+    if (Math.abs(currentPose.getX()) >= Math.abs(targetMetersX) && Math.abs(currentPose.getY()) >= Math.abs(targetMetersY) && Math.abs(currentPose.getRotation().getRadians()) <= targetRotation) {
       return true;
     }
     return false;
