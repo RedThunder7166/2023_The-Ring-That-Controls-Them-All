@@ -34,15 +34,14 @@ public class PlaceAutoRight extends SequentialCommandGroup {
   public PlaceAutoRight(Swerve s_Swerve, theCLAAAWWW clawSubsystem, GripperSubsystem s_Gripper) {
 
     addCommands(
-
-
       new PrintCommand("Starting PlaceAutoRight"),
       new CloseGripperCommand(s_Gripper, Clawstants.closedCube),
-      new ArmCommand(clawSubsystem, Clawstants.armMedium ),
-      new WristCommand(clawSubsystem, Clawstants.wristHigh),
+      new WristCommand(clawSubsystem, Clawstants.wristGrabbed),
+      new ArmCommand(clawSubsystem, Clawstants.armMedium),
+      new WristCommand(clawSubsystem, Clawstants.wristMedium),
       new OpenGripperCommand(s_Gripper, Clawstants.openAll),
       
-      new WristCommand(clawSubsystem, Clawstants.wristLoading),
+      new WristCommand(clawSubsystem, Clawstants.wristTransport),
       new ArmCommand(clawSubsystem, Clawstants.armLoading),
 
       new YfeedforwardAuto(s_Swerve, 0, 0.3, 0),

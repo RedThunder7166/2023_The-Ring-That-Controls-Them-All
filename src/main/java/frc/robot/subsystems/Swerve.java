@@ -123,6 +123,10 @@ public class Swerve extends SubsystemBase {
         }
     }
 
+    public double getPitch() {
+        return gyro.getPitch();
+    }
+
     @Override
     public void periodic() {
         swerveOdometry.update(getYaw(), getModulePositions());
@@ -140,6 +144,8 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Drive Output", mod.getDriveOutput());
 
         }
+
+        SmartDashboard.putNumber("Gyro Pitch", getPitch());
     }
 
 

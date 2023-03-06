@@ -41,9 +41,9 @@ public class LeftHighAuto extends SequentialCommandGroup {
       new WristCommand(clawSubsystem, Clawstants.wristHigh),
       new ArmCommand(clawSubsystem, Clawstants.armHigh),
       new WristCommand(clawSubsystem, Clawstants.wristHigh),
-      new DriveMeters(s_Swerve, .65, 0, 0),
+      new DriveMeters(s_Swerve, 1, 0, 0),
       new OpenGripperCommand(s_Gripper, Clawstants.openAll),
-      new DriveMeters(s_Swerve, -.65, 0, 0),
+      new DriveMeters(s_Swerve, -1, 0, 0),
       new ArmCommand(clawSubsystem, Clawstants.armLoading),
       new YfeedBackwardAuto(s_Swerve, 0, -0.3, 0),
       new DriveMeters(s_Swerve, -4, 0, 180)
