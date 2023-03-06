@@ -17,7 +17,7 @@ public class RampMeters extends CommandBase {
   private double targetMetersY;
   private double targetRotation;
   private Pose2d currentPose;
- private double feedForward = 3;
+  private double feedForward;
 
   private double x_error;
   private double y_error;
@@ -27,7 +27,16 @@ public class RampMeters extends CommandBase {
     targetMetersX = targetX;
     targetMetersY = targetY;
     targetRotation = targetRot;
+    feedForward = 3;
 
+    addRequirements(swerve);
+  }
+  public RampMeters(Swerve swerve, double targetX, double targetY, double targetRot, double feedForward) {
+    s_Swerve = swerve;
+    targetMetersX = targetX;
+    targetMetersY = targetY;
+    targetRotation = targetRot;
+    this.feedForward = feedForward;
     addRequirements(swerve);
   }
 

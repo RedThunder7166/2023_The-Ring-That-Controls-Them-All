@@ -17,16 +17,28 @@ public class RampMetersBack extends CommandBase {
   private double targetMetersY;
   private double targetRotation;
   private Pose2d currentPose;
- private double feedForward =-3.5;
+ private double feedForward; 
 
   private double x_error;
   private double y_error;
   private double rot_error;
+  
   public RampMetersBack(Swerve swerve, double targetX, double targetY, double targetRot) {
     s_Swerve = swerve;
     targetMetersX = targetX;
     targetMetersY = targetY;
     targetRotation = targetRot;
+    feedForward =-3.5;
+
+    addRequirements(swerve);
+  }
+
+  public RampMetersBack(Swerve swerve, double targetX, double targetY, double targetRot, double feedForward) {
+    s_Swerve = swerve;
+    targetMetersX = targetX;
+    targetMetersY = targetY;
+    targetRotation = targetRot;
+    this.feedForward = feedForward;
 
     addRequirements(swerve);
   }

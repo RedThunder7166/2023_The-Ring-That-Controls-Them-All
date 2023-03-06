@@ -11,6 +11,7 @@ import frc.robot.Constants.Clawstants;
 import frc.robot.commands.ArmCommand;
 import frc.robot.commands.CloseGripperCommand;
 import frc.robot.commands.DriveMeters;
+import frc.robot.commands.GyroBalance;
 import frc.robot.commands.OpenGripperCommand;
 import frc.robot.commands.RampMeters;
 import frc.robot.commands.RampMetersBack;
@@ -30,7 +31,7 @@ public class DropCenterChargeAuto extends SequentialCommandGroup {
     addCommands(
       // grip, move arm out, drop
       new CloseGripperCommand(s_Gripper, Clawstants.closedCube),
-      new WristCommand(S_Claw, Clawstants.wristGrabbed),
+      //new WristCommand(S_Claw, Clawstants.wristGrabbed),
       new ArmCommand(S_Claw, Clawstants.armBetweenLowAndMedium),
       //new WristCommand(S_Claw, Clawstants.wristLow),
       new OpenGripperCommand(s_Gripper, Clawstants.openAll),
@@ -40,11 +41,12 @@ public class DropCenterChargeAuto extends SequentialCommandGroup {
       //new WristCommand(S_Claw, Clawstants.wristLoading),
 
       // leave community ???
-      new RampMetersBack(s_Swerve, -4.5, -.1, 0),
+      //new RampMetersBack(s_Swerve, -4.7, -.1, 0),
       // drive on charging station
-      new RampMeters(s_Swerve, 2.45, 0, 0),
-      new DriveMeters(s_Swerve, 0, 0, 1),
-      new InstantCommand(()-> s_Swerve.drive(new Translation2d(), (.03), true, false))//used to turn the wheels in preperation for slipping
+      //new RampMeters(s_Swerve, 2.6, 0, 0, 6),
+      new GyroBalance(s_Swerve, 3)
+      //new DriveMeters(s_Swerve, 0, 0, 1),
+      //ew InstantCommand(()-> s_Swerve.drive(new Translation2d(), (.03), true, false))//used to turn the wheels in preperation for slipping
     );
   }
 }
