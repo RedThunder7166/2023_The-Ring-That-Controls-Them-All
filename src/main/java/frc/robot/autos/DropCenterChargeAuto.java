@@ -9,9 +9,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.Clawstants;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.BalanceOnBeamCommand;
 import frc.robot.commands.CloseGripperCommand;
 import frc.robot.commands.DriveMeters;
-import frc.robot.commands.GyroBalance;
+import frc.robot.commands.BalanceOnBeamCommand;
 import frc.robot.commands.OpenGripperCommand;
 import frc.robot.commands.RampMeters;
 import frc.robot.commands.RampMetersBack;
@@ -44,7 +45,7 @@ public class DropCenterChargeAuto extends SequentialCommandGroup {
       //new RampMetersBack(s_Swerve, -4.7, -.1, 0),
       // drive on charging station
       //new RampMeters(s_Swerve, 2.6, 0, 0, 6),
-      new GyroBalance(s_Swerve, 3)
+      new BalanceOnBeamCommand(s_Swerve)
       //new DriveMeters(s_Swerve, 0, 0, 1),
       //ew InstantCommand(()-> s_Swerve.drive(new Translation2d(), (.03), true, false))//used to turn the wheels in preperation for slipping
     );

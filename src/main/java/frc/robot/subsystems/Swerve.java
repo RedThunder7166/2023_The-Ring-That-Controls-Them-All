@@ -124,7 +124,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public double getPitch() {
-        return gyro.getPitch();
+        return -gyro.getPitch();
     }
 
     @Override

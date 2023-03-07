@@ -118,6 +118,8 @@ public class RobotContainer {
         autoChooser.addOption("LeftHighAuto", new LeftHighAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
         autoChooser.addOption("RightHighAuto", new RightHighAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
 
+        autoChooser.addOption("Test Auto", new TestAuto(s_Swerve));
+
         // Configure the button bindings
 
         configureButtonBindings();
