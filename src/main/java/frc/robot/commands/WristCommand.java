@@ -10,8 +10,8 @@ import frc.robot.subsystems.theCLAAAWWW;
 public class WristCommand extends CommandBase {
   private theCLAAAWWW clawSubsystem;
   private double targetAngle;
-  private double initialAngle;
-  private boolean byeFelicia = false;
+  // private double initialAngle;
+  // private boolean byeFelicia = false;
   private double currentAngle;
   
   /** Creates a new WristCommand. */
@@ -25,7 +25,7 @@ public class WristCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initialAngle = clawSubsystem.getWristAngle();
+    // initialAngle = clawSubsystem.getWristAngle();
     clawSubsystem.setWristAngle(targetAngle);
 
   }

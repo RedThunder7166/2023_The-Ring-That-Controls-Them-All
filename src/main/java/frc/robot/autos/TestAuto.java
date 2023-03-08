@@ -5,7 +5,7 @@
 package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.BalanceOnBeamCommand;
+import frc.robot.commands.GyroAutoBalance;
 import frc.robot.subsystems.Swerve;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -17,7 +17,7 @@ public class TestAuto extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new BalanceOnBeamCommand(m_Swerve)
+      new GyroAutoBalance(m_Swerve)
     );
   }
 }

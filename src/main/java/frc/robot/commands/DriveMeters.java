@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
 
@@ -21,7 +20,7 @@ public class DriveMeters extends CommandBase {
   private double x_error;
   private double y_error;
   private double rot_error;
-  private double feedforward = 1;
+  // private double feedforward = 1;
   public DriveMeters(Swerve swerve, double targetX, double targetY, double targetRot) {
     s_Swerve = swerve;
     targetMetersX = targetX;

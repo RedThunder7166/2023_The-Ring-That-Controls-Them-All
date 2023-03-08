@@ -53,7 +53,7 @@ public class Arm {
         m_armMotorLeft.setNeutralMode(NeutralMode.Brake);
         m_armMotorRight.setNeutralMode(NeutralMode.Brake);
 
-        m_armMotorLeft.configMotionAcceleration(6000);
+        m_armMotorLeft.configMotionAcceleration(14000); // old is 6000
         m_armMotorLeft.configMotionCruiseVelocity(7000);
     }
 
@@ -78,14 +78,14 @@ public class Arm {
 
         
         m_armMotorLeft.set( 
-        ControlMode.MotionMagic,
-        armAngleInEncoderUnits,
-        DemandType.ArbitraryFeedForward,
-        Clawstants.armFeedForward * java.lang.Math
-             .cos(Math.toRadians(ClawUtils.encoderUnitsToDegrees(m_armMotorLeft.getSelectedSensorPosition(), Constants.Clawstants.armGearRatio))));
+            ControlMode.MotionMagic,
+            armAngleInEncoderUnits,
+            DemandType.ArbitraryFeedForward,
+            Clawstants.armFeedForward * java.lang.Math.
+                cos(Math.toRadians(ClawUtils.encoderUnitsToDegrees(m_armMotorLeft.getSelectedSensorPosition(), Constants.Clawstants.armGearRatio)))
+        );
 
     }
-
     public void holdAngle(){
         double currentAngle = getAngle();
         m_armMotorLeft.set(Math.sin(currentAngle) * 0.1);

@@ -10,7 +10,7 @@ import frc.robot.subsystems.theCLAAAWWW;
 public class ArmCommand extends CommandBase {
   private theCLAAAWWW clawSubsystem;
   private double targetAngle;
-  private double initialAngle;
+  // private double initialAngle;
   
   /** Creates a new ArmCommand. */
   public ArmCommand(theCLAAAWWW clawSubsystem, double angle) {
@@ -23,7 +23,7 @@ public class ArmCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initialAngle = clawSubsystem.getArmAngle();
+    // initialAngle = clawSubsystem.getArmAngle();
     clawSubsystem.setArmAngle(targetAngle);
   }
 
