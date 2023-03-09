@@ -12,6 +12,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -59,7 +60,7 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton clawToggle = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton armUp = new JoystickButton(driver, XboxController.Button.kB.value);
-    private final JoystickButton armDown = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton resetOdometry = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton armOffset = new JoystickButton(driver, XboxController.Button.kStart.value);
     private final JoystickButton wristLeft = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton wristRight = new JoystickButton(driver, XboxController.Button.kY.value);
@@ -83,6 +84,8 @@ public class RobotContainer {
     private final theCLAAAWWW s_Claaawww = new theCLAAAWWW();
     private final GripperSubsystem s_GripperSubsystem = new GripperSubsystem();
     // private final Wrist s_wrist = Wrist.getInstance();
+    private final PathPlaaanner s_PathPlanner = new PathPlaaanner(s_Swerve);
+    private final LimelightSubsystem l_Limelight = new LimelightSubsystem();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -112,25 +115,6 @@ public class RobotContainer {
 
         s_Claaawww.setDefaultCommand(new RunCommand(() -> s_Claaawww.drive(-m_Operator.getRightY(), m_Operator.getLeftY()), s_Claaawww));
 
-        // This is just an example event map. It would be better to have a constant, global event map
-        // in your code that will be used by all path following commands.
-        HashMap<String, Command> eventMap = new HashMap<>();
-        eventMap.put("Lower Claw", new PrintCommand("LOWERING CLAW"));
-        eventMap.put("event", new PrintCommand("VENTING"));
-
-        // Create the AutoBuilder. This only needs to be created once when robot code starts, not every time you want to create an auto command. A good place to put this is in RobotContainer along with your subsystems.
-        SwerveAutoBuilder autoBuilder = new SwerveAutoBuilder(
-            s_Swerve::getPose, // Pose2d supplier
-            s_Swerve::resetOdometry, // Pose2d consumer, used to reset odometry at the beginning of auto
-            Constants.Swerve.swerveKinematics, // SwerveDriveKinematics
-            new PIDConstants(1, 0.0, 0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-            new PIDConstants(.5, 0.0, 0), // PID constants to correct for rotation error (used to create the rotation controller)
-            s_Swerve::setModuleStates, // Module states consumer used to output to the drive subsystem
-            eventMap,
-            true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-            s_Swerve // The drive subsystem. Used to properly set the requirements of path following commands
-        );
-
         // autoChooser.setDefaultOption("Thing", thingTraj); //TODO: Change default auto
         // autoChooser.addOption("Thing", thingTraj);
 
@@ -141,9 +125,8 @@ public class RobotContainer {
         autoChooser.addOption("PlaceAutoRight", new PlaceAutoRight(s_Swerve, s_Claaawww, s_GripperSubsystem));
         autoChooser.addOption("LeftHighAuto", new LeftHighAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
         autoChooser.addOption("RightHighAuto", new RightHighAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
-        autoChooser.addOption("PathPlannerAuto", new PathPlannerTest(s_Swerve, autoBuilder));
         autoChooser.addOption("Test Auto", new TestAuto(s_Swerve));
-
+        autoChooser.addOption("1 meter", s_PathPlanner.newFullAuto(PathPlanner.loadPath("1 meter", 3, 5)));
         // Configure the button bindings
 
         configureButtonBindings();
@@ -172,6 +155,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        resetOdometry.onTrue(new InstantCommand(()-> s_Swerve.resetOdometry(new Pose2d(0, 0, s_Swerve.getYaw()))));
       //  back.onTrue(s_GripperSubsystem.toggleLimitedControl());
 
         
