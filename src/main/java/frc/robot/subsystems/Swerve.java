@@ -34,7 +34,7 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
 
     public Swerve() {
-        UsbCamera camera = CameraServer.startAutomaticCapture();
+      //  UsbCamera camera = CameraServer.startAutomaticCapture();
         
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
         gyro.configFactoryDefault();

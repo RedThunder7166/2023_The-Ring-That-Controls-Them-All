@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Swerve;
 
@@ -14,18 +15,19 @@ public class DriveMeters extends CommandBase {
   private Swerve s_Swerve;
   private double targetMetersX;
   private double targetMetersY;
-  private double targetRotation;
+  private double targetDegrees;
   private Pose2d currentPose;
 
   private double x_error;
   private double y_error;
-  private double rot_error;
+  private double Deg_error;
+  private boolean reachedRotation;
   // private double feedforward = 1;
-  public DriveMeters(Swerve swerve, double targetX, double targetY, double targetRot) {
+  public DriveMeters(Swerve swerve, double targetX, double targetY, double targetDeg) {
     s_Swerve = swerve;
     targetMetersX = targetX;
     targetMetersY = targetY;
-    targetRotation = targetRot;
+    targetDegrees = targetDeg;
 
     addRequirements(swerve);
   }
@@ -36,7 +38,8 @@ public class DriveMeters extends CommandBase {
     //Dont know why this fixed t but it did
     x_error = 0;
     y_error = 0;
-    rot_error = 0;
+    Deg_error = 0;
+    reachedRotation = false;
 
     s_Swerve.resetOdometry(new Pose2d(0,0, s_Swerve.getYaw()));
   }
@@ -47,7 +50,7 @@ public class DriveMeters extends CommandBase {
     currentPose = s_Swerve.getPose();
     x_error = targetMetersX - currentPose.getX();
     y_error = targetMetersY - currentPose.getY();
-    rot_error = targetRotation - currentPose.getRotation().getRadians();
+    Deg_error = targetDegrees - currentPose.getRotation().getDegrees();
     // System.out.println(x_error);
     
     // System.out.println(y_error);
@@ -55,14 +58,19 @@ public class DriveMeters extends CommandBase {
 
     double x_kP = 4;
     double y_kP = 4;
-    double rot_kP = 0.1;
+    double Deg_kP = 4;
 
-    double x = x_kP * x_error ;
+    double x = x_kP * x_error                                                                             ;
     double y = y_kP * y_error;
-    double rot = rot_kP * rot_error;
+    double Deg = Deg_kP * Deg_error;
+
+    if (Math.abs(currentPose.getRotation().getDegrees() - Math.abs(targetDegrees)) <= 1) {
+      reachedRotation = true;
+      Deg = targetDegrees;
+    }
     s_Swerve.drive(
         new Translation2d(x, y),
-        rot,
+        Math.toRadians(Deg),
         true,
         false);
   }
@@ -80,7 +88,12 @@ public class DriveMeters extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Math.abs(currentPose.getX()) >= Math.abs(targetMetersX) && Math.abs(currentPose.getY()) >= Math.abs(targetMetersY) && Math.abs(currentPose.getRotation().getRadians()) <= targetRotation) {
+    SmartDashboard.putNumber("CURRENT DEGREES", currentPose.getRotation().getDegrees());
+    SmartDashboard.putNumber("TARGET ROTATION", targetDegrees);
+    if (Math.abs(currentPose.getX()) >= Math.abs(targetMetersX) 
+    && Math.abs(currentPose.getY()) >= Math.abs(targetMetersY) 
+    && reachedRotation)
+    {
       return true;
     }
     return false;

@@ -35,17 +35,18 @@ public class PlaceAutoLeft extends SequentialCommandGroup {
 
     addCommands(
       new PrintCommand("Starting TestAuto"),
-      //new CloseGripperCommand(s_Gripper, Clawstants.closedCube),
+      // new CloseGripperCommand(s_Gripper, Clawstants.closedCube),
       // new WristCommand(clawSubsystem, Clawstants.wristGrabbed),
-      new ArmCommand(clawSubsystem, Clawstants.armHigh),
+      // new ArmCommand(clawSubsystem, Clawstants.armHigh),
       // new WristCommand(clawSubsystem, Clawstants.wristMedium),
       // new OpenGripperCommand(s_Gripper, Clawstants.openAll),
         
       // new WristCommand(clawSubsystem, Clawstants.wristTransport),
-      new ArmCommand(clawSubsystem, Clawstants.armLoading)
+      // new ArmCommand(clawSubsystem, Clawstants.armLoading),
 
       // new YfeedBackwardAuto(s_Swerve, 0, -0.3, 0),
-      // new DriveMeters(s_Swerve, -5, 0, 0)
+      new DriveMeters(s_Swerve, -1, 0, -180),
+      new PrintCommand("Above command(s) has finished.")
     );
   }
 }
