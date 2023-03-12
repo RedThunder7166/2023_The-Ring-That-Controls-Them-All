@@ -4,9 +4,13 @@
 
 package frc.robot.autos;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.Clawstants;
 import frc.robot.commands.ArmCommand;
+import frc.robot.commands.ArmWristCommand;
+import frc.robot.commands.DriveMeters;
 import frc.robot.commands.GripperCommand;
 import frc.robot.commands.GyroAutoBalance;
 import frc.robot.commands.WristCommand;
@@ -24,8 +28,9 @@ public class TestAuto extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       //new ArmCommand(s_claw, Clawstants.armMedium),
-      new GripperCommand(s_GripperSubsystem, Clawstants.closedCone)
-
+     new ArmWristCommand(s_claw, Clawstants.wristMedium, Clawstants.armMedium)
+      ,
+      new PrintCommand("It worked, Yay")
     );
   }
 }

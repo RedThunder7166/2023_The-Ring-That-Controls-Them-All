@@ -27,6 +27,7 @@ public class ArmWristCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_Claw.syncEncoders();
     m_Claw.setWristAngle(targetWristAngle);
     m_Claw.setArmAngle(targetArmAngle);
   }
@@ -36,13 +37,12 @@ public class ArmWristCommand extends CommandBase {
   public void execute() {
     currentWristAngle = m_Claw.getWristAngle();
     currentArmAngle = m_Claw.getArmAngle();
+    System.out.println(currentWristAngle);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_Claw.stopWrist();
-    m_Claw.stopArm();
   }
 
   // Returns true when the command should end.
@@ -51,12 +51,12 @@ public class ArmWristCommand extends CommandBase {
     boolean wristFinished = false;
     boolean armFinished = false;
     if (m_Claw.areWristSwitchesPressed() || (Math.abs(currentWristAngle - targetWristAngle) < 1)) {
-      m_Claw.stopWrist();
       wristFinished = true;
+    //  m_Claw.stopWrist();
     }
     if (Math.abs(currentArmAngle - targetArmAngle) < 2){
-      m_Claw.stopArm();
       armFinished = true;
+      // m_Claw.stopArm();
     }
     return wristFinished && armFinished;
   }

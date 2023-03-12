@@ -163,13 +163,13 @@ public class RobotContainer {
             s_Swerve,
             () -> Math.pow(-driver.getRawAxis(translationAxis), 3),
             () -> Math.pow(-driver.getRawAxis(strafeAxis), 3),
-            () -> -2,
+            () -> -3,
             () -> false));
         fastTurnRight.whileTrue(new TeleopSwerve(
             s_Swerve,
             () -> Math.pow(-driver.getRawAxis(translationAxis), 3),
             () -> Math.pow(-driver.getRawAxis(strafeAxis), 3),
-            () -> 2,
+            () -> 3,
             () -> false));
         
         // lowButton.onTrue(new ClawCommand(s_Claaawww, ClawState.LOW));

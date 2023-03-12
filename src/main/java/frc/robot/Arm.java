@@ -73,10 +73,7 @@ public class Arm {
 
 
     public void setAngle(double armAngle){
-        armAngleInDegrees = armAngle;
-        armAngleInEncoderUnits = ClawUtils.degreesToEncoderUnits(armAngle, Clawstants.armGearRatio);
-
-        
+        armAngleInEncoderUnits = ClawUtils.degreesToEncoderUnits(armAngle, Clawstants.armGearRatio);        
         m_armMotorLeft.set( 
             ControlMode.MotionMagic,
             armAngleInEncoderUnits,

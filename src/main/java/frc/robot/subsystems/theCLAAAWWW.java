@@ -103,7 +103,6 @@ public void drive(double speed, double wristSpeed){
 }
 
 public void setArmAngle(double armAngle){
-  this.armAngle = armAngle;
   arm.setAngle(armAngle);
 }
 
