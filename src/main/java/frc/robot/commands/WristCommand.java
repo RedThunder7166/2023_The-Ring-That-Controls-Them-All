@@ -66,7 +66,7 @@ public class WristCommand extends CommandBase {
       return true;
     }
     
-    if((Math.abs(currentAngle - targetAngle) < 5)){
+    if((Math.abs(currentAngle - targetAngle) < 1)){
       return true;
     }
     return false;

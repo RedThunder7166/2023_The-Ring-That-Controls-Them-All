@@ -57,8 +57,8 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kBack.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton clawToggle = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+    private final JoystickButton fastTurnLeft = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton fastTurnRight = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
     private final JoystickButton armUp = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton resetOdometry = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton armOffset = new JoystickButton(driver, XboxController.Button.kStart.value);
@@ -99,7 +99,7 @@ public class RobotContainer {
                         () -> Math.pow(-driver.getRawAxis(translationAxis), 3),
                         () -> Math.pow(-driver.getRawAxis(strafeAxis), 3),
                         () -> -driver.getRawAxis(rotationAxis),
-                        () -> robotCentric.getAsBoolean()));
+                        () -> false));
                         
         s_GripperSubsystem.setDefaultCommand(
             new RunCommand(
@@ -125,8 +125,9 @@ public class RobotContainer {
         autoChooser.addOption("PlaceAutoRight", new PlaceAutoRight(s_Swerve, s_Claaawww, s_GripperSubsystem));
         autoChooser.addOption("LeftHighAuto", new LeftHighAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
         autoChooser.addOption("RightHighAuto", new RightHighAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
-        autoChooser.addOption("Test Auto", new TestAuto(s_Swerve));
+        autoChooser.addOption("Test Auto", new TestAuto(s_Swerve, s_Claaawww ,s_GripperSubsystem));
         autoChooser.addOption("1 meter", s_PathPlanner.newFullAuto(PathPlanner.loadPath("1 meter", 3, 5)));
+        autoChooser.addOption("TwoPieceAuto", new TwoPieceAuto(s_Swerve, s_Claaawww, s_GripperSubsystem));
         // Configure the button bindings
 
         configureButtonBindings();
@@ -158,7 +159,18 @@ public class RobotContainer {
         resetOdometry.onTrue(new InstantCommand(()-> s_Swerve.resetOdometry(new Pose2d(0, 0, s_Swerve.getYaw()))));
       //  back.onTrue(s_GripperSubsystem.toggleLimitedControl());
 
-        
+        fastTurnLeft.whileTrue(new TeleopSwerve(
+            s_Swerve,
+            () -> Math.pow(-driver.getRawAxis(translationAxis), 3),
+            () -> Math.pow(-driver.getRawAxis(strafeAxis), 3),
+            () -> -2,
+            () -> false));
+        fastTurnRight.whileTrue(new TeleopSwerve(
+            s_Swerve,
+            () -> Math.pow(-driver.getRawAxis(translationAxis), 3),
+            () -> Math.pow(-driver.getRawAxis(strafeAxis), 3),
+            () -> 2,
+            () -> false));
         
         // lowButton.onTrue(new ClawCommand(s_Claaawww, ClawState.LOW));
         // highButton.onTrue(new ClawCommand(s_Claaawww, ClawState.HIGH));

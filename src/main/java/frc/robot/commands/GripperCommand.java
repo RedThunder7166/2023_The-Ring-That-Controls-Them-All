@@ -35,9 +35,9 @@ public class GripperCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    double direction = 0.9;
+    double direction = -0.9;//swapped negatives
     if (isClosing) {
-      direction = -0.9;
+      direction = 0.9;
     }
     m_GripperSubsystem.driveGripper(direction);
   }

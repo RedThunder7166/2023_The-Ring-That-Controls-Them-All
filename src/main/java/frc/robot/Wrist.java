@@ -20,8 +20,8 @@ public class Wrist {
     private double wristAngleInDegrees = 0;
     private CANCoder wristAbsolute;
     private static Wrist singleton;
-    private DigitalInput positiveSwitch = new DigitalInput(2);
-    private DigitalInput negativeSwitch = new DigitalInput(1);
+    private DigitalInput positiveSwitch = new DigitalInput(1);
+    private DigitalInput negativeSwitch = new DigitalInput(2);
 
 
 
@@ -44,7 +44,7 @@ public class Wrist {
         wristAbsolute.configSensorDirection(true);
         wristAbsolute.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
         wristAbsolute.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
-        wristAbsolute.configMagnetOffset(-188); 
+        wristAbsolute.configMagnetOffset(180); 
 
         m_wristMotor.configMotionAcceleration(6000);
         m_wristMotor.configMotionCruiseVelocity(7500);

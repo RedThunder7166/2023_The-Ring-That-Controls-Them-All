@@ -23,7 +23,7 @@ public class GripperSubsystem extends SubsystemBase {
   public GripperSubsystem() {
     gripperAbsolute.configFactoryDefault();
     gripperAbsolute.configSensorInitializationStrategy(SensorInitializationStrategy.BootToZero);
-    gripperAbsolute.configMagnetOffset(-120); // WARNING: DO NOT CHANGE THIS UNLESS ENCODER HAS BEEN REMOVED AND PUT BACK ON
+    gripperAbsolute.configMagnetOffset(-59); // WARNING: DO NOT CHANGE THIS UNLESS ENCODER HAS BEEN REMOVED AND PUT BACK ON
 
   }// This value sets zero to ~2 degrees 
 

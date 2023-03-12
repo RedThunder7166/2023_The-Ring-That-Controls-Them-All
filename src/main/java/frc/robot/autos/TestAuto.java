@@ -5,19 +5,27 @@
 package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.Clawstants;
+import frc.robot.commands.ArmCommand;
+import frc.robot.commands.GripperCommand;
 import frc.robot.commands.GyroAutoBalance;
+import frc.robot.commands.WristCommand;
+import frc.robot.subsystems.GripperSubsystem;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.theCLAAAWWW;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TestAuto extends SequentialCommandGroup {
   /** Creates a new TestAuto. */
-  public TestAuto(Swerve m_Swerve) {
+  public TestAuto(Swerve m_Swerve, theCLAAAWWW s_claw, GripperSubsystem  s_GripperSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new GyroAutoBalance(m_Swerve)
+      //new ArmCommand(s_claw, Clawstants.armMedium),
+      new GripperCommand(s_GripperSubsystem, Clawstants.closedCone)
+
     );
   }
 }

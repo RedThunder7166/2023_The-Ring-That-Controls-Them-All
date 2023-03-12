@@ -196,25 +196,24 @@ public final class Constants {
         public static final double armGearRatio = 144;
         public static final double wristGearRatio = 1;
 
-        public static final double closedCube = 219;//TODO update with correct encoder value
-        public static final double openAll = 340;
-        public static final double closedCone = 10;
+        public static final double closedCube = 215;//TODO update with correct encoder value
+        public static final double openAll = 350;
+        public static final double closedCone = 103;
 
-        public static final double wristGrabbed = 294; // Values Changed 2/26 2:53PM WAS 326
-        public static final double wristLoading = 286;
-        public static final double wristTransport = 94;
-        public static final double wristLow = 151;
-        public static final double wristMedium = 192;
-        public static final double wristHigh = 195;
+        public static final double wristGrabbed = 276; // Values Changed 2/26 2:53PM WAS 326
+        public static final double wristLoading = 266;
+        public static final double wristTransport = 81;
+        public static final double wristLow = 129;
+        public static final double wristMedium = 170;
+        public static final double wristHigh = 187;
 
         public static final double armLoading = 0;
         public static final double armTransport = 0;
-        public static final double armLow = 11;
-        public static final double armBetweenLowAndMedium = 44;
-        public static final double armMedium = 85; // this is fudged up.
-        public static final double armHigh = 100;
+        public static final double armLow = 21;
+        public static final double armBetweenLowAndMedium = 53;
+        public static final double armMedium = 94; // this is fudged up.
+        public static final double armHigh = 112;
         public static final double armTransition = 50;
 
-        /* Arm Motor PID Values */
     }
 }
